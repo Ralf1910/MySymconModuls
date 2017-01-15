@@ -57,6 +57,7 @@ class WundergroundWeather extends IPSModule {
 			$this->MaintainVariable("NowWindgust", "Windböe (aktuell)", 2, "WGW.WindSpeedkmh", 110, $keep);
 			$this->MaintainVariable("NowWindspeed", "Windgeschwindigkeit (aktuell)", 2, "WGW.WindSpeedkmh", 120, $keep);
 			$this->MaintainVariable("NowWindDeg", "Windrichtung (aktuell)", 2, "WindDirection.Text", 130, $keep);
+			$this->MaintainVariable("NowCondition", "Gegebenheiten (aktuell)", 3, "", 140, $keep);
 			//Stündliche Variablen erstellen/löschen
 			if ($this->ReadPropertyBoolean("FetchHourly")) {
 				$keep = $this->ReadPropertyInteger("FetchHourlyHoursCount");
@@ -124,6 +125,7 @@ class WundergroundWeather extends IPSModule {
 			}
 			SetValue($this->GetIDForIdent("NowVisibility"), $WeatherNow->current_observation->visibility_km);
 			SetValue($this->GetIDForIdent("NowUV"), $WeatherNow->current_observation->UV);
+			SetValue($this->GetIDForIdent("NowCondition"), $WeatherNow->current_observation->weather);
 		}
 		//Stündliche Vorhersagen
 		if ($this->ReadPropertyBoolean("FetchHourly")) {
