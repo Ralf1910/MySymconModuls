@@ -1,7 +1,8 @@
 # WundergroundWeather
-Das Modul fragt über die Wunderground API Wetterdaten ab.  
-Dafür ist eine Registrierung auf www.wunderground.com nötig, um einen API-Key zu erhalten.  
-Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch 12-stündliche Vorhersagen abgefragt werden.  
+Das Modul fragt Ã¼ber die Wunderground API Wetterdaten ab. Grundlage fÃ¼r dieses Modul ist das Modul von Paresy, dass ich etwas an meine BedÃ¼rfnisse angepaÃŸt habe.
+
+DafÃ¼r ist eine Registrierung auf www.wunderground.com nÃ¶tig, um einen API-Key zu erhalten.  
+Es kÃ¶nnen aktuelle Daten, Unwetterwarnungen, sowie stÃ¼ndliche als auch 12-stÃ¼ndliche Vorhersagen abgefragt werden.  
 
 ### Inhaltverzeichnis
 
@@ -15,9 +16,9 @@ Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch 12-stündl
 
 ### 1. Funktionsumfang
 
-* De-/Aktivierbare Abfrage von gewünschten Wetterdaten.
-* Einstellbarkeit der Menge der Unwetter, stündlichen und 12-stündlichen Daten.
-* Timer für automatische Aktualisierung der Daten.
+* De-/Aktivierbare Abfrage von gewÃ¼nschten Wetterdaten.
+* Einstellbarkeit der Menge der Unwetter, stÃ¼ndlichen und 12-stÃ¼ndlichen Daten.
+* Timer fÃ¼r automatische Aktualisierung der Daten.
 
 ### 2. Voraussetzungen
 
@@ -25,36 +26,36 @@ Es können aktuelle Daten, Unwetterwarnungen, sowie stündliche als auch 12-stündl
 
 ### 3. Software-Installation
 
-Über das Modul-Control folgende URL hinzufügen.  
+Ãœber das Modul-Control folgende URL hinzufÃ¼gen.  
 `git://github.com/paresy/SymconMisc.git`  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- Unter "Instanz hinzufügen" ist das 'WundergroundWeather'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
+- Unter "Instanz hinzufÃ¼gen" ist das 'WundergroundWeather'-Modul unter dem Hersteller '(Sonstige)' aufgefÃ¼hrt.  
 
 __Konfigurationsseite__:
 
 Name                              | Beschreibung
 --------------------------------- | ---------------------------------
-Standort                          | Standort, von dem die Daten entnommen werden sollen. Ob ein Standort verfügbar ist, kann auf der www.wunderground.com Seite ausprobiert werden. Sollte ein Standort nicht vorhanden sein, sollte ein nächstgelegener größerer Ort gewählt werden.
+Standort                          | Standort, von dem die Daten entnommen werden sollen. Ob ein Standort verfÃ¼gbar ist, kann auf der www.wunderground.com Seite ausprobiert werden. Sollte ein Standort nicht vorhanden sein, sollte ein nÃ¤chstgelegener grÃ¶ÃŸerer Ort gewÃ¤hlt werden.
 Land                              | Hier muss das Land eingetragen werden.
 API Key                           | Wunderground API-Key. Kann auf der Wunderground Homepage nach Registrierung angefordert werden. "More"->"Weather API for Developers".
 Aktuelle Daten abfragen           | Aktiviert die Abfrage der aktuellen Wetterdaten.
-Stündliche Vorhersage             | Aktiviert die Abfrage der stündlichen Vorhersage.
-12stündliche Vorhersage           | Aktiviert die Abfrage der 12-stündlichen Vorhersage.
+StÃ¼ndliche Vorhersage             | Aktiviert die Abfrage der stÃ¼ndlichen Vorhersage.
+12stÃ¼ndliche Vorhersage           | Aktiviert die Abfrage der 12-stÃ¼ndlichen Vorhersage.
 Unwetterwarnung abfragen          | Aktiviert die Abfrage der Unwetter Vorhersage.
-Anzahl Vorhersagen (12-stündlich) | Die Anzahl der 12-stündlichen Vorhersagen. Maximalwert: 8
-Anzahl Vorhersagen (stdündlich)   | Die Anzahl der stündlichen Vorhersagen. Maximalwert: 24
+Anzahl Vorhersagen (12-stÃ¼ndlich) | Die Anzahl der 12-stÃ¼ndlichen Vorhersagen. Maximalwert: 8
+Anzahl Vorhersagen (stdÃ¼ndlich)   | Die Anzahl der stÃ¼ndlichen Vorhersagen. Maximalwert: 24
 Anzahl Unwetterwarnung            | Die Anzahl der Unwetter Vorhersagen. Maximalwert: 6
-Update Wetterdaten                | Setzt den Timer in Minuten, wie oft die Wetterdaten aktualisiert werden sollen. (aktuell/stündlich/12-stündlich)
+Update Wetterdaten                | Setzt den Timer in Minuten, wie oft die Wetterdaten aktualisiert werden sollen. (aktuell/stÃ¼ndlich/12-stÃ¼ndlich)
 Update Unwetterwarnungen          | Setzt den Timer in Minuten, wie oft die Unwetterwarnungen aktualisiert werden sollen.
-Button Update Wetter              | Aktualisiert die Wetterdaten (aktuell/stündlich/12-stündlich). Sofern alle drei Abfragen deaktiviert sind oder der Timer auf 0 gesetzt ist => Timer deaktiviert
+Button Update Wetter              | Aktualisiert die Wetterdaten (aktuell/stÃ¼ndlich/12-stÃ¼ndlich). Sofern alle drei Abfragen deaktiviert sind oder der Timer auf 0 gesetzt ist => Timer deaktiviert
 Button Update Unwetterwarnungen   | Aktualisiert die Unwetterwarnungen. Sofern die Unwetterwarnungsabfrage deaktiviert oder der Timer auf 0 gesetzt ist => Timer deaktiviert
 
 
 ### 5. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Die Statusvariablen/Kategorien werden automatisch angelegt. Das LÃ¶schen einzelner kann zu Fehlfunktionen fÃ¼hren.
 
 ##### Aktuelle Wetterdaten
 
@@ -62,47 +63,47 @@ Name                | Typ     | Beschreibung
 ------------------- | ------- | ----------------
 Luftdruck           | Float   | Angabe in hPa
 Luftfeuchtigkeit    | Float   | Angabe in %
-Niederschlag/h      | Float   | Angabe in Liter/m²
-Niederschlag Tag    | Float   | Angabe in Liter/m²
+Niederschlag/h      | Float   | Angabe in Liter/mÂ²
+Niederschlag Tag    | Float   | Angabe in Liter/mÂ²
 Sichtweite          | Float   | Angabe in km
-Sonnenstrahlung     | Float   | Angabe in W/m²
-Temperatur          | Float   | Angabe in °C
-Temperatur gefühlt  | Float   | Angabe in °C
-Temperatur Taupunkt | Float   | Angabe in °C
-UV Strahlung        | Integer | Informationen: [UVIndex Erklärung](https://www.wunderground.com/resources/health/uvindex.asp)
-Windböe             | Float   | Angabe in km/h
+Sonnenstrahlung     | Float   | Angabe in W/mÂ²
+Temperatur          | Float   | Angabe in Â°C
+Temperatur gefÃ¼hlt  | Float   | Angabe in Â°C
+Temperatur Taupunkt | Float   | Angabe in Â°C
+UV Strahlung        | Integer | Informationen: [UVIndex ErklÃ¤rung](https://www.wunderground.com/resources/health/uvindex.asp)
+WindbÃ¶e             | Float   | Angabe in km/h
 Windgeschwindigkeit | Float   | Angabe in km/h
 Windrichtung        | Float   | Angabe in Himmelsrichtungen
 
-##### Stündliche Vorhersage
-Die Variablen werden mit 1..24h gekennzeichnet. (1 = Vorhersage nächste volle Stunde; 24 = Vorhersage der 24ten vollen Stunde)
+##### StÃ¼ndliche Vorhersage
+Die Variablen werden mit 1..24h gekennzeichnet. (1 = Vorhersage nÃ¤chste volle Stunde; 24 = Vorhersage der 24ten vollen Stunde)
 
 Name                | Typ     | Beschreibung
 ------------------- | ------- | ----------------
-Gegebenheit         | String  | Beschreibt das Wetter z.B. "Bedeckt", "Regen möglich"
+Gegebenheit         | String  | Beschreibt das Wetter z.B. "Bedeckt", "Regen mÃ¶glich"
 Luftfeuchtigkeit    | Float   | Angabe in %
 Luftdruck           | Float   | Angabe in hPa
-Regenmenge          | Float   | Angabe in Liter/m²
-Temperatur          | Float   | Angabe in °C
+Regenmenge          | Float   | Angabe in Liter/mÂ²
+Temperatur          | Float   | Angabe in Â°C
 Wolkendecke         | Integer | Angabe in %
 Windgeschwindigkeit | Float   | Angabe in km/h
 
-##### 12-stündliche Vorhersage
+##### 12-stÃ¼ndliche Vorhersage
 Die Variablen werden mit 12, 24..96h gekennzeichnet (12 = Vorhersage in 12 Stunden; 96 = Vorhersage in 96 Stunden)
 
 Name             | Typ   | Beschreibung
 ---------------- | ----- | ----------------
-Höchsttemperatur | Float | Angabe in °C
-Tiefsttemperatur | Float | Angabe in °C
+HÃ¶chsttemperatur | Float | Angabe in Â°C
+Tiefsttemperatur | Float | Angabe in Â°C
 
 ##### Unwetterwarnung
 
 Name         | Typ     | Beschreibung
 ------------ | ------- | ----------------
-Beschreibung | String  | Beschreibt die Warnung mit möglichen weiteren Informationen wie z. B. Windgeschwindigkeiten oder Regenmengen.
+Beschreibung | String  | Beschreibt die Warnung mit mÃ¶glichen weiteren Informationen wie z. B. Windgeschwindigkeiten oder Regenmengen.
 Datum        | Integer | Angabe in UnixTimeStamp. Datum wann die Warnung ausgesprochen wurde.
 Name         | String  | Ausgeschriebener Typ. z.B. Gewitter
-Typ          | String  | 3-Buchstabenkürzel für die Warnung ([Übersicht](https://www.wunderground.com/weather/api/d/docs?d=data/alerts))
+Typ          | String  | 3-BuchstabenkÃ¼rzel fÃ¼r die Warnung ([Ãœbersicht](https://www.wunderground.com/weather/api/d/docs?d=data/alerts))
 
 ##### Profile:
 
@@ -116,18 +117,18 @@ WGW.UVIndex      | Integer
 
 ### 6. WebFront
 
-Über das WebFront werden die Variablen angezeigt. Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
+Ãœber das WebFront werden die Variablen angezeigt. Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
 
 ### 7. PHP-Befehlsreferenz
 
 `boolean WGW_UpdateWeatherData(integer $InstanzID);`  
-Aktualisiert die Wetterdaten (aktuell/stündlich/12-stündlich) des Weathergroundmoduls mit der InstanzID $InstanzID.  
-Die Funktion liefert keinerlei Rückgabewert.  
+Aktualisiert die Wetterdaten (aktuell/stÃ¼ndlich/12-stÃ¼ndlich) des Weathergroundmoduls mit der InstanzID $InstanzID.  
+Die Funktion liefert keinerlei RÃ¼ckgabewert.  
 Beispiel:  
 `WGW_UpdateWeatherData(12345);`
 
 `boolean WGW_UpdateStormWarningData(integer $InstanzID);`  
 Aktualisiert die Unwetterwarnungen des Weathergroundmoduls mit der InstanzID $InstanzID.  
-Die Funktion liefert keinerlei Rückgabewert.  
+Die Funktion liefert keinerlei RÃ¼ckgabewert.  
 Beispiel:  
 `WGW_UpdateStormWarningData(12345);`
