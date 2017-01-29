@@ -46,10 +46,10 @@ class KoboldVR200 extends IPSModule {
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
 			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, $keep);
 			$this->MaintainVariable("error", "Fehlermeldung", 3, "", 30, $keep);
-			$this->MaintainVariable("state", "Status", 1, "", 40, $keep);
+			$this->MaintainVariable("state", "Status", 1, "VR200.Status", 40, $keep);
 			$this->MaintainVariable("action", "Action", 1, "", 50, $keep);
 			$this->MaintainVariable("cleaningCategory", "Reinigungskategory", 1, "", 60, $keep);
-			$this->MaintainVariable("cleaningMode", "Reinigungsmodus", 1, "", 70, $keep);
+			$this->MaintainVariable("cleaningMode", "Reinigungsmodus", 1, "VR200.Mode", 70, $keep);
 			$this->MaintainVariable("cleaningModifier", "Reinigungsmodifier", 1, "", 80, $keep);
 			$this->MaintainVariable("cleaningSpotWidth", "Spotbreite", 1, "", 90, $keep);
 			$this->MaintainVariable("cleaningSpotHeight", "Spothöhe", 1, "", 100, $keep);
@@ -140,19 +140,30 @@ class KoboldVR200 extends IPSModule {
 			 }
 	}
 
+	private function CreateVarProfileVR200Mode() {
+				if (!IPS_VariableProfileExists("VR200.Status")) {
+					IPS_CreateVariableProfile("VR200.Status", 1);
+					IPS_SetVariableProfileText("VR200.Status", "", "");
+					IPS_SetVariableProfileAssociation("VR200.Status", 1, "normal", "", 0xFFFF00);
+					IPS_SetVariableProfileAssociation("VR200.Status", 2, "eco", "", 0xFFFF00);
+				 }
+	}
+
 
 
 
 	public function getState() {
 		return $this->doAction("getRobotState");
 	}
-	public function startCleaning($eco = false) {
-		$params = array("category" => 2, "mode" => ($eco ? 1 : 2), "modifier" => 2);
+	public function startCleaning() {
+		$params = array("category" => 2, "mode" => 2, "modifier" => 2);
+		SetValue($this->GetIDForIdent("lastCleaning"), time());
 		return $this->doAction("startCleaning", $params);
 	}
 
 	public function startEcoCleaning() {
 		$params = array("category" => 2, "mode" => 1, "modifier" => 2);
+		SetValue($this->GetIDForIdent("lastCleaning"), time());
 		return $this->doAction("startCleaning", $params);
 	}
 	public function pauseCleaning() {
