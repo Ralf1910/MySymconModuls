@@ -2,16 +2,16 @@
   "elements":
   [
 	{ "type": "ValidationTextBox", "name": "Seriennummer", "caption": "Seriennummer" },
-	{ "type": "Label", "label": "Secrect Key für den Kobol Sauger" },
+	{ "type": "Label", "label": "Secrect Key fuer den Kobol Sauger" },
 	{ "type": "ValidationTextBox", "name": "SecretKey", "caption": "Secret Key" },
-	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren während des Saugens" },
+	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren waehrend des Saugens" },
 	{ "type": "IntervalBox", "name": "UpdateKoboldWorking", "caption": "Minutes" },
-	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren während des Ladens" },
+	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren waehrend des Ladens" },
 	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "Minutes" }
   ],
  "actions":
   [
-	{ "type": "Button", "label": "Update Serial and Secret Key", "onClick": "WGW_UpdateSerial();" },
+	{ "type": "Button", "label": "Update Serial and Secret Key", "onClick": "VR200_UpdateSerialAnKey();" },
   ],
   "status":
   [
