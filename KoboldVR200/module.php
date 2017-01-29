@@ -270,13 +270,13 @@ class KoboldVR200 extends IPSModule {
 				}
 				$payload = json_encode($payload);
 				$date = gmdate("D, d M Y H:i:s")." GMT";
-				$data = implode("\n", array(strtolower($this->serial), $date, $payload));
-				$hmac = hash_hmac("sha256", $data, $this->secret);
+				$data = implode("\n", array(strtolower($this->ReadPropertyString("SerialNumber")), $date, $payload));
+				$hmac = hash_hmac("sha256", $data, $this->ReadPropertyString("SecretKey"));
 				$headers = array(
 		    	"Date: ".$date,
 		    	"Authorization: NEATOAPP ".$hmac
 				);
-				$result = requestKobold($this->baseUrl.$this->serial."/messages", $payload, "POST", $headers);
+				$result = requestKobold($this->ReadPropertyString("BaseURL").$this->ReadPropertyString("SerialNumber")."/messages", $payload, "POST", $headers);
 			}
 			return $result;
 	}
