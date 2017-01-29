@@ -11,7 +11,7 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyString("SecretKey", "");
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 1);
 		$this->RegisterPropertyInteger("UpdateKoboldCharging", 5);
-		$this->RegisterPropertyInteger("CleaningIntervalWinter", 5);
+		$this->RegisterPropertyInteger("CleaningIntervalWinter", 2);
 		$this->RegisterPropertyInteger("CleaningIntervalSpring", 3);
 		$this->RegisterPropertyInteger("CleaningIntervalSummer", 3);
 		$this->RegisterPropertyInteger("CleaningIntervalAutum", 2);
@@ -246,4 +246,6 @@ class KoboldVR200 extends IPSModule {
  // Fehlermeldungen
  //
  // ui_error_dust_bin_full
+ // ui_error_dust_bin_emptied
+ // ui_alert_invalid
  //
