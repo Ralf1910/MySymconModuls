@@ -96,10 +96,10 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
 		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
 
-		if ($this->ReadPropertyInteger("state") == 1)
-			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
-		else
-			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldWorking")*60*1000);
+	//	if ($this->ReadPropertyInteger("state") == 1)
+	//		$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
+	//	else
+	//		$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldWorking")*60*1000);
 	}
 
 
