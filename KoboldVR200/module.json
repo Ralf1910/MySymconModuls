@@ -1,0 +1,13 @@
+{
+"id": "{646B9FD7-EA82-4C5F-850B-98BBCF53F98A}",
+  "name": "Kobol VR200",
+  "type": 3,
+  "vendor": "",
+  "aliases": [
+    "Kobol VR200 Saugroboter"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "VR200"
+}

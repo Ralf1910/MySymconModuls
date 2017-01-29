@@ -1,0 +1,22 @@
+{
+  "elements":
+  [
+	{ "type": "ValidationTextBox", "name": "Seriennummer", "caption": "Seriennummer" },
+	{ "type": "Label", "label": "Secrect Key für den Kobol Sauger" },
+	{ "type": "ValidationTextBox", "name": "SecretKey", "caption": "Secret Key" },
+	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren während des Saugens" },
+	{ "type": "IntervalBox", "name": "UpdateKoboldWorking", "caption": "Minutes" },
+	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren während des Ladens" },
+	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "Minutes" }
+  ],
+ "actions":
+  [
+	{ "type": "Button", "label": "Update Serial and Secret Key", "onClick": "WGW_UpdateSerial();" },
+  ],
+  "status":
+  [
+	{ "code": 101, "icon": "active", "caption": "Instance getting created!" },
+	{ "code": 102, "icon": "active", "caption": "Instance is active!" },
+	{ "code": 104, "icon": "inactive", "caption": "Instance is inactive!" }
+  ]
+}
