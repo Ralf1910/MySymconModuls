@@ -306,7 +306,7 @@ class KoboldVR200 extends IPSModule {
 		    	"Date: ".$date,
 		    	"Authorization: NEATOAPP ".$hmac
 				);
-				$result = requestKobold($this->ReadPropertyString("BaseURL").$this->ReadPropertyString("SerialNumber")."/messages", $payload, "POST", $headers);
+				$result = $this->requestKobold($this->ReadPropertyString("BaseURL").$this->ReadPropertyString("SerialNumber")."/messages", $payload, "POST", $headers);
 			}
 			return $result;
 	}
