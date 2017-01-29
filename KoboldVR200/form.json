@@ -3,17 +3,20 @@
   [
 	{ "type": "ValidationTextBox", "name": "BaseURL", "caption": "URL for Kobold communication." },
 	{ "type": "ValidationTextBox", "name": "SerialNumber", "caption": "serialnumber" },
-	{ "type": "Label", "label": "secrect key for the Kobold" },
 	{ "type": "ValidationTextBox", "name": "SecretKey", "caption": "secret key" },
 	{ "type": "Label", "label": "Update Kobold data every X minutes during working." },
 	{ "type": "IntervalBox", "name": "UpdateKoboldWorking", "caption": "ninutes" },
 	{ "type": "Label", "label": "Update Kobold data every X minutes during charging." },
 	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "minutes" },
-	{ "type": "Label", "label": "Clean every X Days during the following month:" },
-	{ "type": "Label", "label": "January" },
-	{ "type": "IntervalBox", "name": "CleaningInterval01", "caption": "days" },
-	{ "type": "Label", "label": "February" },
-	{ "type": "IntervalBox", "name": "CleaningInterval02", "caption": "days" }
+	{ "type": "Label", "label": "Clean every X Days during the following Season:" },
+	{ "type": "Label", "label": "Winter (Dezember - February)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalWinter", "caption": "days" },
+	{ "type": "Label", "label": "Spring (March - May)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalSpring", "caption": "days" },
+	{ "type": "Label", "label": "Summer (June - August)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalSummer", "caption": "days" },
+	{ "type": "Label", "label": "Autum (September - November)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalAutum", "caption": "days" }
 	
   ],
  "actions":

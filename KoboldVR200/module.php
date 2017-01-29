@@ -177,7 +177,7 @@ class KoboldVR200 extends IPSModule {
 
 	//Variablenprofil für den Status erstellen
 	private function CreateVarProfileVR200Status() {
-			if (!IPS_VariableProfileExists("VR200.Statu")) {
+			if (!IPS_VariableProfileExists("VR200.Status")) {
 				IPS_CreateVariableProfile("VR200.Status", 1);
 				IPS_SetVariableProfileText("VR200.Status", "", "");
 				IPS_SetVariableProfileAssociation("VR200.Status", 1, "angehalten", "", 0xFFFF00);

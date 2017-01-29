@@ -12,8 +12,12 @@
 			"Instance is active!": "Instanz ist aktiv!",
 			"Instance is inactive!": "Instanz ist inaktiv",
 			"Start Cleaning":"Reinigung starten",
-			"Stop Cleaning":"Reinigung stoppen"
+			"Stop Cleaning":"Reinigung stoppen",
+			"Clean every X Days during the following Season:":"Reinigung jeden X. Tag druchführen in den Jahreszeiten:",
+			"Winter (Dezember - February)":"Winter (Dezember - Februar)",
+			"Spring (March - May)":"Frühling (März - Mai)",
+			"Summer (June - August)":"Sommer (Juni - August)",
+			"Autum (September - November)":"Herbst (September - November)"
 		}
 	}
 }
-
