@@ -10,7 +10,9 @@
 			"minutes": "Minuten",
 			"Instance getting created!": "Instanz wird erstellt!",
 			"Instance is active!": "Instanz ist aktiv!",
-			"Instance is inactive!": "Instanz ist inaktiv"
+			"Instance is inactive!": "Instanz ist inaktiv",
+			"Start Cleaning":"Reinigung starten",
+			"Stop Cleaning":"Reinigung stoppen"
 		}
 	}
 }

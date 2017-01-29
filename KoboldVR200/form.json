@@ -12,7 +12,9 @@
   ],
  "actions":
   [
-	{ "type": "Button", "label": "Update Serial and Secret Key", "onClick": "VR200_UpdateKoboldData($id);" }
+	{ "type": "Button", "label": "Update Kobold Data", "onClick": "VR200_UpdateKoboldData($id);" }
+	{ "type": "Button", "label": "Start Cleaning", "onClick": "VR200_startCleaning($id);" }
+	{ "type": "Button", "label": "Stop Cleaning", "onClick": "VR200_stopCleaning($id);" }
   ],
   "status":
   [

@@ -69,9 +69,20 @@ class KoboldVR200 extends IPSModule {
 		$robotState = $this->doAction("getRobotState");
 
 		SetValue($this->GetIDForIdent("version"), $robotState['version']);
-		SetValue($this->GetIDForIdent("reqId"), $robotState['reqID']);
+		SetValue($this->GetIDForIdent("reqId"), $robotState['reqId']);
 		SetValue($this->GetIDForIdent("error"), $robotState['error']);
-		SetValue($this->GetIDForIdent("state"), $robotState['data']['state']);
+		SetValue($this->GetIDForIdent("state"), $robotState['state']);
+		SetValue($this->GetIDForIdent("action"), $robotState['action']);
+		SetValue($this->GetIDForIdent("cleaningCategory"), $robotState['cleaning']['category']);
+		SetValue($this->GetIDForIdent("cleaningMode"), $robotState['cleaning']['mode']);
+		SetValue($this->GetIDForIdent("cleaningModifier"), $robotState['cleaning']['modifier']);
+		SetValue($this->GetIDForIdent("cleaningSpotWidth"), $robotState['cleaning']['spotWidth']);
+		SetValue($this->GetIDForIdent("cleaningSpotHeight"), $robotState['cleaning']['spotHeight']);
+		SetValue($this->GetIDForIdent("detailsIsCharging"), $robotState['details']['isCharging']);
+		SetValue($this->GetIDForIdent("detailsIsDocked"), $robotState['details']['isDocked']);
+		SetValue($this->GetIDForIdent("detailsIsScheduleEnabled"), $robotState['details']['isScheduleEnabled']);
+		SetValue($this->GetIDForIdent("detailsDockHasBeenSeen"), $robotState['details']['dockHasBeenSeen']);
+		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
 
 
 
