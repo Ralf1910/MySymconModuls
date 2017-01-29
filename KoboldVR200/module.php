@@ -9,8 +9,13 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyString("BaseURL", "https://nucleo.ksecosys.com/vendors/vorwerk/robots/");
 		$this->RegisterPropertyString("SerialNumber", "");
 		$this->RegisterPropertyString("SecretKey", "");
-		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
-		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
+		$this->RegisterPropertyInteger("UpdateKoboldWorking", 1);
+		$this->RegisterPropertyInteger("UpdateKoboldCharging", 5);
+		$this->RegisterPropertyInteger("CleaningIntervalWinter", 5);
+		$this->RegisterPropertyInteger("CleaningIntervalSpring", 3);
+		$this->RegisterPropertyInteger("CleaningIntervalSummer", 3);
+		$this->RegisterPropertyInteger("CleaningIntervalAutum", 2);
+
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
 		$this->CreateVarProfileVR200IsCharging();
 		$this->CreateVarProfileVR200Charge();
@@ -93,58 +98,8 @@ class KoboldVR200 extends IPSModule {
 
 	}
 
-	public function UpdateStormWarningData() {
-		//Abfrage von Unwetterwarnungen
-		if ($this->ReadPropertyBoolean("FetchStormWarning")) {
-			$warnings = $this->RequestAPI("/alerts/lang:DL/q/");
-			$alerts = array_slice($warnings->alerts, 0, 3);
-			$this->SendDebug("WGW Alerts", print_r($alerts, true), 0);
-			//Unwetterdaten setzen
-			for ($i = 1; $i <= $this->ReadPropertyInteger("FetchStormWarningStormWarningCount"); $i++) {
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->date !== "")) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Date"), strtotime($alerts[$i-1]->date));
-				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Date"), 0);
-				}
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->type !== "")) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Type"), $alerts[$i-1]->type);
-				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Type"), "");
-				}
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->wtype_meteoalarm_name !== "")) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Name"), $alerts[$i-1]->wtype_meteoalarm_name);
-				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Name"), "");
-				}
-				if(isset($alerts[$i-1]) && ($alerts[$i-1]->description !== "")) {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Text"), str_replace("deutsch:", "", $alerts[$i-1]->description));
-				} else {
-					SetValue($this->GetIDForIdent("StormWarning".$i."Text"), "");
-				}
-			}
-		}
-	}
-	private function WithoutSpecialChars($String){
-		return str_replace(array("ä", "ö", "ü", "Ä", "Ö", "Ü", "ß"), array("a", "o", "u", "A", "O", "U", "ss"), $String);
-	}
-	//JSON String abfragen und als decodiertes Array zurückgeben
-	private function RequestAPI($URLString) {
-		$location = $this->WithoutSpecialChars($this->ReadPropertyString("Location"));  // Location
-		$country = $this->WithoutSpecialChars($this->ReadPropertyString("Country"));  // Country
-		$APIkey = $this->ReadPropertyString("APIKey");  // API Key Wunderground
-		$this->SendDebug("WGW Requested URL", "http://api.wunderground.com/api/".$APIkey.$URLString.$country."/".$location.".json", 0);
-		$content = file_get_contents("http://api.wunderground.com/api/".$APIkey.$URLString.$country."/".$location.".json");  //Json Daten öffnen
-		if ($content === false) {
-			throw new Exception("Die Wunderground-API konnte nicht abgefragt werden!");
-		}
 
-		$content = json_decode($content);
 
-		if (isset($content->response->error)) {
-			throw new Exception("Die Anfrage bei Wunderground beinhaltet Fehler: ".$content->response->error->description);
-		}
-		return $content;
-	}
 	// Variablenprofile erstellen
 	private function CreateVarProfile($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon) {
 		if (!IPS_VariableProfileExists($name)) {
@@ -187,13 +142,6 @@ class KoboldVR200 extends IPSModule {
 
 
 
-
-	// protected $serial;
-	// protected $secret;
-	// public function __construct($serial, $secret) {
-	//	$this->serial = $serial;
-	//	$this->secret = $secret;
-	// }
 
 	public function getState() {
 		return $this->doAction("getRobotState");
