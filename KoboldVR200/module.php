@@ -212,7 +212,7 @@ class KoboldVR200 extends IPSModule {
 	}
 
 	//Variablenprofil für die Battery erstellen
-	private function CreateVarProfileVR200BatteryCharge() {
+	private function CreateVarProfileVR200Charge() {
 			if (!IPS_VariableProfileExists("VR200.Charge")) {
 				IPS_CreateVariableProfile("VR200.Charge", 1);
 				IPS_SetVariableProfileValues("VR200.Charge", 0, 100, 1);
