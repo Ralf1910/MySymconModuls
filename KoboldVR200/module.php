@@ -68,10 +68,10 @@ class KoboldVR200 extends IPSModule {
 	public function UpdateKoboldData() {
 		$robotState = $this->doAction("getRobotState");
 
-		SetValue($this->GetIDForIdent("version"), $robotState->version);
-		SetValue($this->GetIDForIdent("reqId"), $robotState->reqID);
-		SetValue($this->GetIDForIdent("error"), $robotState->error);
-		SetValue($this->GetIDForIdent("state"), $robotState->data->state);
+		SetValue($this->GetIDForIdent("version"), $robotState['version']);
+		SetValue($this->GetIDForIdent("reqId"), $robotState['reqID']);
+		SetValue($this->GetIDForIdent("error"), $robotState['error']);
+		SetValue($this->GetIDForIdent("state"), $robotState['data']['state']);
 
 
 
