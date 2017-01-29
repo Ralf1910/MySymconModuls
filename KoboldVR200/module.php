@@ -83,6 +83,8 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("detailsIsScheduleEnabled"), $robotState['details']['isScheduleEnabled']);
 		SetValue($this->GetIDForIdent("detailsDockHasBeenSeen"), $robotState['details']['dockHasBeenSeen']);
 		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
+		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['ModelName']);
+		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['Firmware']);
 
 
 
