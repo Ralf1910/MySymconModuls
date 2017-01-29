@@ -12,6 +12,7 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
 		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
+		$this->CreateVarProfileVR200Battery()
 //		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
 //		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
 //		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
@@ -39,7 +40,7 @@ class KoboldVR200 extends IPSModule {
 			$this->MaintainVariable("cleaningModifier", "Reinigungsmodifier", 1, "", 80, $keep);
 			$this->MaintainVariable("cleaningSpotWidth", "Spotbreite", 1, "", 90, $keep);
 			$this->MaintainVariable("cleaningSpotHeight", "Spothöhe", 1, "", 100, $keep);
-			$this->MaintainVariable("detailsIsCharging", "Lädt", 0, "", 110, $keep);
+			$this->MaintainVariable("detailsIsCharging", "Lädt", 0, "VR200.Battery", 110, $keep);
 			$this->MaintainVariable("detailsIsDocked", "In der Ladestation", 0, "", 120, $keep);
 			$this->MaintainVariable("detailsIsScheduleEnabled", "Zeitplan aktiviert", 0, "", 130, $keep);
 			$this->MaintainVariable("detailsDockHasBeenSeen", "Dockingstation gesichtet", 0, "", 140, $keep);
@@ -197,22 +198,16 @@ class KoboldVR200 extends IPSModule {
 		 }
 	}
 	//Variablenprofil für die Windgeschwindigkeit erstellen
-	private function CreateVarProfileWGWWindSpeedKmh() {
-		if (!IPS_VariableProfileExists("WGW.WindSpeedkmh")) {
-			IPS_CreateVariableProfile("WGW.WindSpeedkmh", 2);
-			IPS_SetVariableProfileText("WGW.WindSpeedkmh", "", " km/h");
-			IPS_SetVariableProfileValues("WGW.WindSpeedkmh", 0, 200, 0);
-			IPS_SetVariableProfileDigits("WGW.WindSpeedkmh", 1);
-			IPS_SetVariableProfileIcon("WGW.WindSpeedkmh", "WindSpeed");
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 0, "%.1f", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 2, "%.1f", "", 0x66CC33);
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 4, "%.1f", "", 0xFF6666);
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 6, "%.1f", "", 0x33A488);
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 10, "%.1f", "", 0x00CCCC);
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 20, "%.1f", "", 0xFF33CC);
-			IPS_SetVariableProfileAssociation("WGW.WindSpeedkmh", 36, "%.1f", "", 0XFFCCFF);
-		 }
+	private function CreateVarProfileVR200Battery() {
+			if (!IPS_VariableProfileExists("VR200.Battery")) {
+				IPS_CreateVariableProfile("VR200.Battery", 0);
+				IPS_SetVariableProfileText("VR200.Battery", "", "");
+				IPS_SetVariableProfileAssociation("VR200.Battery", 0, "lädt", "", 0xFFFF00);
+				IPS_SetVariableProfileAssociation("VR200.Battery", 1, "entlädt", "", 0x66CC33);
+			 }
 	}
+
+
 	//Variablenprofil für den UVIndex erstellen
 	private function CreateVarProfileWGWUVIndex() {
 		if (!IPS_VariableProfileExists("WGW.UVIndex")) {
