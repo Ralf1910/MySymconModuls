@@ -22,8 +22,7 @@ class KoboldVR200 extends IPSModule {
 //		$this->CreateVarProfileWGWWindSpeedkmh();
 //		$this->CreateVarProfileWGWUVIndex();
 		//Timer erstellen
-		$this->RegisterTimer("UpdateWorking", $this->ReadPropertyInteger("UpdateKoboldWorking"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
-		$this->RegisterTimer("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000, 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
@@ -31,17 +30,8 @@ class KoboldVR200 extends IPSModule {
 		parent::ApplyChanges();
 		if (($this->ReadPropertyString("SerialNumber") != "") && ($this->ReadPropertyString("SecretKey") != "")){
 			//Timerzeit setzen in Minuten
-		/*	if ($this->ReadPropertyBoolean("FetchNow") || $this->ReadPropertyBoolean("FetchHourly") || $this->ReadPropertyBoolean("FetchHalfDaily")) {
-				$this->SetTimerInterval("UpdateWeather", $this->ReadPropertyInteger("UpdateWeatherInterval")*1000*60);
-			} else {
-				$this->SetTimerInterval("UpdateWeather", 0);
-			}
-			if ($this->ReadPropertyBoolean("FetchStormWarning")) {
-				$this->SetTimerInterval("UpdateStormWarning", $this->ReadPropertyInteger("UpdateWarningInterval")*1000*60);
-			} else {
-				$this->SetTimerInterval("UpdateStormWarning", 0);
-			} */
-			//Jetzt Variablen erstellen/löschen
+			$this->SetTimerInterval("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
+
 			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
 			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, $keep);
