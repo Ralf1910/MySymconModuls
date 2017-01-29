@@ -12,7 +12,7 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
 		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
-		$this->CreateVarProfileVR200Battery()
+		$this->CreateVarProfileVR200Battery();
 //		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
 //		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
 //		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
