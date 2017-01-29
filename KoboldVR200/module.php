@@ -11,10 +11,6 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyString("SecretKey", "");
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
 		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
-//		$this->RegisterPropertyBoolean("FetchStormWarning", true);
-//		$this->RegisterPropertyInteger("FetchStormWarningStormWarningCount", 3);
-//		$this->RegisterPropertyInteger("UpdateWeatherInterval", 10);
-//		$this->RegisterPropertyInteger("UpdateWarningInterval", 60);
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
 //		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
 //		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
@@ -30,7 +26,7 @@ class KoboldVR200 extends IPSModule {
 		parent::ApplyChanges();
 		if (($this->ReadPropertyString("SerialNumber") != "") && ($this->ReadPropertyString("SecretKey") != "")){
 			//Timerzeit setzen in Minuten
-			$this->SetTimerInterval("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
+			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
 
 			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
@@ -83,8 +79,8 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("detailsIsScheduleEnabled"), $robotState['details']['isScheduleEnabled']);
 		SetValue($this->GetIDForIdent("detailsDockHasBeenSeen"), $robotState['details']['dockHasBeenSeen']);
 		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
-		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['ModelName']);
-		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['Firmware']);
+		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
+		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
 
 
 
