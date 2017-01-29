@@ -13,6 +13,9 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
 		$this->CreateVarProfileVR200IsCharging();
+		$this->CreateVarProfileVR200Charge();
+		$this->CreateVarProfileVR200Status();
+
 //		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
 //		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
 //		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
@@ -31,6 +34,7 @@ class KoboldVR200 extends IPSModule {
 			// Variablenprofile anlegen
 			$this->CreateVarProfileVR200IsCharging();
 			$this->CreateVarProfileVR200Charge();
+			$this->CreateVarProfileVR200Status();
 
 			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
@@ -85,56 +89,6 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
 		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
 		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
-
-
-
-		/** if ($this->ReadPropertyBoolean("FetchNow")) {
-			//Daten vom Kobold holen
-			$WeatherNow = $this->RequestAPI("/conditions/lang:DL/q/");
-			$this->SendDebug("WGW Now", print_r($WeatherNow, true), 0);
-			//Wetterdaten in Variable speichern
-			SetValue($this->GetIDForIdent("NowTemp"), $WeatherNow->current_observation->temp_c);
-			SetValue($this->GetIDForIdent("NowTempFeel"), $WeatherNow->current_observation->feelslike_c);
-			SetValue($this->GetIDForIdent("NowTempDewpoint"), $WeatherNow->current_observation->dewpoint_c);
-			SetValue($this->GetIDForIdent("NowHumidity"), substr($WeatherNow->current_observation->relative_humidity, 0, -1));
-			SetValue($this->GetIDForIdent("NowPressure"), $WeatherNow->current_observation->pressure_mb);
-			SetValue($this->GetIDForIdent("NowWindDeg"), $WeatherNow->current_observation->wind_degrees);
-			SetValue($this->GetIDForIdent("NowWindspeed"), $WeatherNow->current_observation->wind_kph);
-			SetValue($this->GetIDForIdent("NowWindgust"), $WeatherNow->current_observation->wind_gust_kph);
-			SetValue($this->GetIDForIdent("NowRain"), $WeatherNow->current_observation->precip_1hr_metric);
-			SetValue($this->GetIDForIdent("NowRainToday"), $WeatherNow->current_observation->precip_today_metric);
-			if ($WeatherNow->current_observation->solarradiation === "--") {
-				SetValue($this->GetIDForIdent("NowSolar"), 0);
-			} else {
-				SetValue($this->GetIDForIdent("NowSolar"), $WeatherNow->current_observation->solarradiation);
-			}
-			SetValue($this->GetIDForIdent("NowVisibility"), $WeatherNow->current_observation->visibility_km);
-			SetValue($this->GetIDForIdent("NowUV"), $WeatherNow->current_observation->UV);
-			SetValue($this->GetIDForIdent("NowCondition"), $WeatherNow->current_observation->weather);
-		}
-		//Stündliche Vorhersagen
-		if ($this->ReadPropertyBoolean("FetchHourly")) {
-			$WeatherNextHours = $this->RequestAPI("/hourly/lang:DL/q/");
-			$this->SendDebug("WGW Hourly", print_r($WeatherNextHours, true), 0);
-			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHourlyHoursCount"); $i++) {
-				SetValue($this->GetIDForIdent("HourlyTemp".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->temp->metric);
-				SetValue($this->GetIDForIdent("HourlySky".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->sky);
-				SetValue($this->GetIDForIdent("HourlyCondition".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->condition);
-				SetValue($this->GetIDForIdent("HourlyHumidity".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->humidity);
-				SetValue($this->GetIDForIdent("HourlyWindspeed".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->wspd->metric);
-				SetValue($this->GetIDForIdent("HourlyPressure".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->mslp->metric);
-				SetValue($this->GetIDForIdent("HourlyRain".$i."h"), $WeatherNextHours->hourly_forecast[$i-1]->qpf->metric);
-			}
-		}
-		//12 stündliche Vorhersagen
-		if ($this->ReadPropertyBoolean("FetchHalfDaily")) {
-			$WeatherNextHalfDays = $this->RequestAPI("/forecast/lang:DL/q/");
-			$this->SendDebug("WGW HalfDays", print_r($WeatherNextHalfDays, true), 0);
-			for ($i=1; $i <= $this->ReadPropertyInteger("FetchHalfDailyHalfDaysCount") ; $i++) {
-				SetValue($this->GetIDForIdent("HalfDailyHighTemp".(12*$i)."h"), $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius);
-				SetValue($this->GetIDForIdent("HalfDailyLowTemp".(12*$i)."h"), $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius);
-			}
-		} **/
 
 	}
 
@@ -220,17 +174,14 @@ class KoboldVR200 extends IPSModule {
 			 }
 	}
 
-	//Variablenprofil für den UVIndex erstellen
-	private function CreateVarProfileWGWUVIndex() {
-		if (!IPS_VariableProfileExists("WGW.UVIndex")) {
-			IPS_CreateVariableProfile("WGW.UVIndex", 1);
-			IPS_SetVariableProfileValues("WGW.UVIndex", 0, 12, 0);
-			IPS_SetVariableProfileAssociation("WGW.UVIndex", 0, "%.1f", "" , 0xC0FFA0);
-			IPS_SetVariableProfileAssociation("WGW.UVIndex", 3, "%.1f", "" , 0xF8F040);
-			IPS_SetVariableProfileAssociation("WGW.UVIndex", 6, "%.1f", "" , 0xF87820);
-			IPS_SetVariableProfileAssociation("WGW.UVIndex", 8, "%.1f", "" , 0xD80020);
-			IPS_SetVariableProfileAssociation("WGW.UVIndex", 11, "%.1f", "" , 0xA80080);
-		 }
+	//Variablenprofil für den Status erstellen
+	private function CreateVarProfileVR200Status() {
+			if (!IPS_VariableProfileExists("VR200.Statu")) {
+				IPS_CreateVariableProfile("VR200.Status", 1);
+				IPS_SetVariableProfileText("VR200.Status", "", "");
+				IPS_SetVariableProfileAssociation("VR200.Status", 1, "angehalten", "", 0xFFFF00);
+				IPS_SetVariableProfileAssociation("VR200.Status", 2, "reinigt", "", 0xFFFF00);
+			 }
 	}
 
 
