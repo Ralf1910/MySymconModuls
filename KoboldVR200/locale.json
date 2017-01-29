@@ -1,6 +1,7 @@
 {
 	"translations": {
 		"de": { 
+			"URL for Kobold communication.":"URL für die Kommunikation mit dem Kobold",
 			"serialnumber": "Seriennummer",
 			"secrect key for the Kobold": "Secret Key für den Kobold VR200",
 			"secret key": "Secret Key",

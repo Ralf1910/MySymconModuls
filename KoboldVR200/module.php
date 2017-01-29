@@ -1,9 +1,13 @@
 <?
 // Klassendefinition
 class KoboldVR200 extends IPSModule {
+
+	protected $baseUrl = "https://nucleo.ksecosys.com/vendors/vorwerk/robots/";
+
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
+		$this->RegisterPropertyString("BaseURL", $baseURL);
 		$this->RegisterPropertyString("SerialNumber", "");
 		$this->RegisterPropertyString("SecretKey", "");
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
@@ -19,8 +23,8 @@ class KoboldVR200 extends IPSModule {
 //		$this->CreateVarProfileWGWWindSpeedkmh();
 //		$this->CreateVarProfileWGWUVIndex();
 		//Timer erstellen
-//		$this->RegisterTimer("UpdateWeather", $this->ReadPropertyInteger("UpdateWeatherInterval"), 'WGW_UpdateWeatherData($_IPS[\'TARGET\']);');
-//		$this->RegisterTimer("UpdateStormWarning", $this->ReadPropertyInteger("UpdateWarningInterval"), 'WGW_UpdateStormWarningData($_IPS[\'TARGET\']);');
+//		$this->RegisterTimer("UpdateWorking", $this->ReadPropertyInteger("UpdateKoboldWorking"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
+//		$this->RegisterTimer("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging"), 'WGW_UpdateKoboldData($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
@@ -65,9 +69,16 @@ class KoboldVR200 extends IPSModule {
 			$this->SetStatus(104);
 		}
 	}
-	public function UpdateWeatherData() {
-		if ($this->ReadPropertyBoolean("FetchNow")) {
-			//Wetterdaten vom aktuellen Wetter
+	public function UpdateSerialAndKey() {
+
+	}
+
+	public function UpdateKoboldData() {
+		$result = $this->doAction("getRobotState");
+		print_r $result;
+
+		/** if ($this->ReadPropertyBoolean("FetchNow")) {
+			//Daten vom Kobold holen
 			$WeatherNow = $this->RequestAPI("/conditions/lang:DL/q/");
 			$this->SendDebug("WGW Now", print_r($WeatherNow, true), 0);
 			//Wetterdaten in Variable speichern
@@ -112,8 +123,10 @@ class KoboldVR200 extends IPSModule {
 				SetValue($this->GetIDForIdent("HalfDailyHighTemp".(12*$i)."h"), $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->high->celsius);
 				SetValue($this->GetIDForIdent("HalfDailyLowTemp".(12*$i)."h"), $WeatherNextHalfDays->forecast->simpleforecast->forecastday[$i-1]->low->celsius);
 			}
-		}
-}
+		} **/
+
+	}
+
 	public function UpdateStormWarningData() {
 		//Abfrage von Unwetterwarnungen
 		if ($this->ReadPropertyBoolean("FetchStormWarning")) {
@@ -204,5 +217,99 @@ class KoboldVR200 extends IPSModule {
 			IPS_SetVariableProfileAssociation("WGW.UVIndex", 8, "%.1f", "" , 0xD80020);
 			IPS_SetVariableProfileAssociation("WGW.UVIndex", 11, "%.1f", "" , 0xA80080);
 		 }
+	}
+
+
+
+
+	// protected $serial;
+	// protected $secret;
+	// public function __construct($serial, $secret) {
+	//	$this->serial = $serial;
+	//	$this->secret = $secret;
+	// }
+
+	public function getState() {
+		return $this->doAction("getRobotState");
+	}
+	public function startCleaning($eco = false) {
+		$params = array("category" => 2, "mode" => ($eco ? 1 : 2), "modifier" => 2);
+		return $this->doAction("startCleaning", $params);
+	}
+
+	public function startEcoCleaning() {
+		$params = array("category" => 2, "mode" => 1, "modifier" => 2);
+		return $this->doAction("startCleaning", $params);
+	}
+	public function pauseCleaning() {
+		return $this->doAction("pauseCleaning");
+	}
+
+		public function resumeCleaning() {
+			return $this->doAction("resumeCleaning");
+		}
+		public function stopCleaning() {
+			return $this->doAction("stopCleaning");
+		}
+		public function sendToBase() {
+			return $this->doAction("sendToBase");
+		}
+		public function enableSchedule() {
+			return $this->doAction("enableSchedule");
+		}
+		public function disableSchedule() {
+			return $this->doAction("disableSchedule");
+		}
+		public function getSchedule() {
+			return $this->doAction("getSchedule");
+		}
+		protected function doAction($command, $params = false) {
+			$result = array("message" => "no serial or secret");
+			if($this->ReadPropertyString("SerialNumber") !== false && $this->ReadPropertyString("SecretKey") !== false) {
+				$payload = array("reqId" => "1", "cmd" => $command);
+				if($params !== false) {
+					$payload["params"] = $params;
+				}
+				$payload = json_encode($payload);
+				$date = gmdate("D, d M Y H:i:s")." GMT";
+				$data = implode("\n", array(strtolower($this->serial), $date, $payload));
+				$hmac = hash_hmac("sha256", $data, $this->secret);
+				$headers = array(
+		    	"Date: ".$date,
+		    	"Authorization: NEATOAPP ".$hmac
+				);
+				$result = requestKobold($this->baseUrl.$this->serial."/messages", $payload, "POST", $headers);
+			}
+			return $result;
+	}
+
+
+	/*
+	* VR200 Api.
+	* Helper class to make requests against Kobold API
+	*
+	* PHP port based on https://github.com/kangguru/botvac
+	*
+	* Author: Tom Rosenback tom.rosenback@gmail.com  2016
+	*/
+	private static function requestKobold($url, $payload = array(), $method = "POST", $headers = array()) {
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+		if($method == "POST") {
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+		}
+		$requestHeaders = array(
+			'Accept: application/vnd.neato.nucleo.v1'
+		);
+		if(count($headers) > 0) {
+			$requestHeaders = array_merge($requestHeaders, $headers);
+		}
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return json_decode($result, true);
 	}
  }
