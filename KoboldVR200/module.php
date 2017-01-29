@@ -43,11 +43,11 @@ class KoboldVR200 extends IPSModule {
 			$this->MaintainVariable("cleaningModifier", "Reinigungsmodifier", 1, "", 80, $keep);
 			$this->MaintainVariable("cleaningSpotWidth", "Spotbreite", 1, "", 90, $keep);
 			$this->MaintainVariable("cleaningSpotHeight", "Spothöhe", 1, "", 100, $keep);
-			$this->MaintainVariable("detailsIsCharging", "Lädt", 0, "VR200.Battery", 110, $keep);
+			$this->MaintainVariable("detailsIsCharging", "Lädt", 0, "VR200.isCharging", 110, $keep);
 			$this->MaintainVariable("detailsIsDocked", "In der Ladestation", 0, "", 120, $keep);
 			$this->MaintainVariable("detailsIsScheduleEnabled", "Zeitplan aktiviert", 0, "", 130, $keep);
 			$this->MaintainVariable("detailsDockHasBeenSeen", "Dockingstation gesichtet", 0, "", 140, $keep);
-			$this->MaintainVariable("detailsCharge", "Ladezustand", 1, "", 150, $keep);
+			$this->MaintainVariable("detailsCharge", "Ladezustand", 1, "VR200.Charge", 150, $keep);
 			$this->MaintainVariable("metaModelName", "Modelname", 3, "", 160, $keep);
 			$this->MaintainVariable("metaFirmware", "Firmware", 3, "", 170, $keep);
 
