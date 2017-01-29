@@ -23,7 +23,7 @@ class KoboldVR200 extends IPSModule {
 //		$this->CreateVarProfileWGWUVIndex();
 		//Timer erstellen
 //		$this->RegisterTimer("UpdateWorking", $this->ReadPropertyInteger("UpdateKoboldWorking"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
-//		$this->RegisterTimer("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging"), 'WGW_UpdateKoboldData($_IPS[\'TARGET\']);');
+//		$this->RegisterTimer("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
