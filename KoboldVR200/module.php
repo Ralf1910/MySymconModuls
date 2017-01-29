@@ -28,6 +28,9 @@ class KoboldVR200 extends IPSModule {
 		if (($this->ReadPropertyString("SerialNumber") != "") && ($this->ReadPropertyString("SecretKey") != "")){
 			//Timerzeit setzen in Minuten
 			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
+			// Variablenprofile anlegen
+			$this->CreateVarProfileVR200BatteryBoolean();
+			$this->CreateVarProfileVR200BatteryInteger();
 
 			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
@@ -197,8 +200,9 @@ class KoboldVR200 extends IPSModule {
 			IPS_SetVariableProfileIcon($name, $Icon);
 		 }
 	}
-	//Variablenprofil für die Windgeschwindigkeit erstellen
-	private function CreateVarProfileVR200Battery() {
+
+	//Variablenprofil für die Battery erstellen
+	private function CreateVarProfileVR200BatteryBoolean() {
 			if (!IPS_VariableProfileExists("VR200.Battery")) {
 				IPS_CreateVariableProfile("VR200.Battery", 0);
 				IPS_SetVariableProfileText("VR200.Battery", "", "");
@@ -207,6 +211,14 @@ class KoboldVR200 extends IPSModule {
 			 }
 	}
 
+	//Variablenprofil für die Battery erstellen
+	private function CreateVarProfileVR200BatteryInteger() {
+			if (!IPS_VariableProfileExists("VR200.Battery")) {
+				IPS_CreateVariableProfile("VR200.Battery", 1);
+				IPS_SetVariableProfileValues("VR200.Battery", 0, 100, 1);
+				IPS_SetVariableProfileText("VR200.Battery", "", " %");
+			 }
+	}
 
 	//Variablenprofil für den UVIndex erstellen
 	private function CreateVarProfileWGWUVIndex() {
