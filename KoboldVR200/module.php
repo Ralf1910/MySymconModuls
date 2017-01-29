@@ -141,11 +141,11 @@ class KoboldVR200 extends IPSModule {
 	}
 
 	private function CreateVarProfileVR200Mode() {
-				if (!IPS_VariableProfileExists("VR200.Status")) {
-					IPS_CreateVariableProfile("VR200.Status", 1);
-					IPS_SetVariableProfileText("VR200.Status", "", "");
-					IPS_SetVariableProfileAssociation("VR200.Status", 1, "normal", "", 0xFFFF00);
-					IPS_SetVariableProfileAssociation("VR200.Status", 2, "eco", "", 0xFFFF00);
+				if (!IPS_VariableProfileExists("VR200.Mode")) {
+					IPS_CreateVariableProfile("VR200.Mode", 1);
+					IPS_SetVariableProfileText("VR200.Mode", "", "");
+					IPS_SetVariableProfileAssociation("VR200.Mode", 1, "normal", "", 0xFFFF00);
+					IPS_SetVariableProfileAssociation("VR200.Mode", 2, "eco", "", 0xFFFF00);
 				 }
 	}
 
