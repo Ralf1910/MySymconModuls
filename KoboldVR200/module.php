@@ -12,7 +12,7 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
 		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
-		$this->CreateVarProfileVR200Battery();
+		$this->CreateVarProfileVR200IsCharging();
 //		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
 //		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
 //		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
@@ -29,8 +29,8 @@ class KoboldVR200 extends IPSModule {
 			//Timerzeit setzen in Minuten
 			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
 			// Variablenprofile anlegen
-			$this->CreateVarProfileVR200BatteryBoolean();
-			$this->CreateVarProfileVR200BatteryInteger();
+			$this->CreateVarProfileVR200IsCharging();
+			$this->CreateVarProfileVR200Charge();
 
 			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
@@ -202,21 +202,21 @@ class KoboldVR200 extends IPSModule {
 	}
 
 	//Variablenprofil für die Battery erstellen
-	private function CreateVarProfileVR200BatteryBoolean() {
-			if (!IPS_VariableProfileExists("VR200.Battery")) {
-				IPS_CreateVariableProfile("VR200.Battery", 0);
-				IPS_SetVariableProfileText("VR200.Battery", "", "");
-				IPS_SetVariableProfileAssociation("VR200.Battery", 0, "lädt", "", 0xFFFF00);
-				IPS_SetVariableProfileAssociation("VR200.Battery", 1, "entlädt", "", 0x66CC33);
+	private function CreateVarProfileVR200IsCharging() {
+			if (!IPS_VariableProfileExists("VR200.isCharging")) {
+				IPS_CreateVariableProfile("VR200.isCharging", 0);
+				IPS_SetVariableProfileText("VR200.isCharging", "", "");
+				IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "lädt", "", 0xFFFF00);
+				IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "entlädt", "", 0x66CC33);
 			 }
 	}
 
 	//Variablenprofil für die Battery erstellen
-	private function CreateVarProfileVR200BatteryInteger() {
-			if (!IPS_VariableProfileExists("VR200.Battery")) {
-				IPS_CreateVariableProfile("VR200.Battery", 1);
-				IPS_SetVariableProfileValues("VR200.Battery", 0, 100, 1);
-				IPS_SetVariableProfileText("VR200.Battery", "", " %");
+	private function CreateVarProfileVR200BatteryCharge() {
+			if (!IPS_VariableProfileExists("VR200.Charge")) {
+				IPS_CreateVariableProfile("VR200.Charge", 1);
+				IPS_SetVariableProfileValues("VR200.Charge", 0, 100, 1);
+				IPS_SetVariableProfileText("VR200.Charge", "", " %");
 			 }
 	}
 
