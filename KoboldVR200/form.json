@@ -8,7 +8,13 @@
 	{ "type": "Label", "label": "Update Kobold data every X minutes during working." },
 	{ "type": "IntervalBox", "name": "UpdateKoboldWorking", "caption": "ninutes" },
 	{ "type": "Label", "label": "Update Kobold data every X minutes during charging." },
-	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "minutes" }
+	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "minutes" },
+	{ "type": "Label", "label": "Clean every X Days during the following month:" },
+	{ "type": "Label", "label": "January" },
+	{ "type": "IntervalBox", "name": "CleaningInterval01", "caption": "days" },
+	{ "type": "Label", "label": "February" },
+	{ "type": "IntervalBox", "name": "CleaningInterval02", "caption": "days" }
+	
   ],
  "actions":
   [

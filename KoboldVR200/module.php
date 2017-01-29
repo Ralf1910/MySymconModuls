@@ -37,6 +37,7 @@ class KoboldVR200 extends IPSModule {
 			$this->CreateVarProfileVR200Status();
 
 			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
+			$this->MaintainVariable("lastCleaning", "letzte Reinigung", 1, "~UnixTimestampDate", 10, $keep);
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
 			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, $keep);
 			$this->MaintainVariable("error", "Fehlermeldung", 3, "", 30, $keep);
