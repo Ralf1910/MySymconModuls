@@ -4,35 +4,31 @@ class KoboldVR200 extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
-		$this->RegisterPropertyString("Location", "Lübeck");
-		$this->RegisterPropertyString("Country", "Germany");
-		$this->RegisterPropertyString("APIKey", "");
-		$this->RegisterPropertyBoolean("FetchNow", true);
-		$this->RegisterPropertyBoolean("FetchHourly", true);
-		$this->RegisterPropertyInteger("FetchHourlyHoursCount", 3);
-		$this->RegisterPropertyBoolean("FetchHalfDaily", true);
-		$this->RegisterPropertyInteger("FetchHalfDailyHalfDaysCount", 4);
-		$this->RegisterPropertyBoolean("FetchStormWarning", true);
-		$this->RegisterPropertyInteger("FetchStormWarningStormWarningCount", 3);
-		$this->RegisterPropertyInteger("UpdateWeatherInterval", 10);
-		$this->RegisterPropertyInteger("UpdateWarningInterval", 60);
+		$this->RegisterPropertyString("SerialNumber", "");
+		$this->RegisterPropertyString("SecretKey", "");
+		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
+		$this->RegisterPropertyInteger("UpdateKoboldCharging", 4);
+//		$this->RegisterPropertyBoolean("FetchStormWarning", true);
+//		$this->RegisterPropertyInteger("FetchStormWarningStormWarningCount", 3);
+//		$this->RegisterPropertyInteger("UpdateWeatherInterval", 10);
+//		$this->RegisterPropertyInteger("UpdateWarningInterval", 60);
 		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
-		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
-		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
-		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
-		$this->CreateVarProfileWGWWindSpeedkmh();
-		$this->CreateVarProfileWGWUVIndex();
+//		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
+//		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
+//		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
+//		$this->CreateVarProfileWGWWindSpeedkmh();
+//		$this->CreateVarProfileWGWUVIndex();
 		//Timer erstellen
-		$this->RegisterTimer("UpdateWeather", $this->ReadPropertyInteger("UpdateWeatherInterval"), 'WGW_UpdateWeatherData($_IPS[\'TARGET\']);');
-		$this->RegisterTimer("UpdateStormWarning", $this->ReadPropertyInteger("UpdateWarningInterval"), 'WGW_UpdateStormWarningData($_IPS[\'TARGET\']);');
+//		$this->RegisterTimer("UpdateWeather", $this->ReadPropertyInteger("UpdateWeatherInterval"), 'WGW_UpdateWeatherData($_IPS[\'TARGET\']);');
+//		$this->RegisterTimer("UpdateStormWarning", $this->ReadPropertyInteger("UpdateWarningInterval"), 'WGW_UpdateStormWarningData($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
 		// Diese Zeile nicht löschen
 		parent::ApplyChanges();
-		if (($this->ReadPropertyString("APIKey") != "") && ($this->ReadPropertyString("Location") != "")){
+		if (($this->ReadPropertyString("SerialNumber") != "") && ($this->ReadPropertyString("SecretKey") != "")){
 			//Timerzeit setzen in Minuten
-			if ($this->ReadPropertyBoolean("FetchNow") || $this->ReadPropertyBoolean("FetchHourly") || $this->ReadPropertyBoolean("FetchHalfDaily")) {
+		/*	if ($this->ReadPropertyBoolean("FetchNow") || $this->ReadPropertyBoolean("FetchHourly") || $this->ReadPropertyBoolean("FetchHalfDaily")) {
 				$this->SetTimerInterval("UpdateWeather", $this->ReadPropertyInteger("UpdateWeatherInterval")*1000*60);
 			} else {
 				$this->SetTimerInterval("UpdateWeather", 0);
@@ -41,9 +37,9 @@ class KoboldVR200 extends IPSModule {
 				$this->SetTimerInterval("UpdateStormWarning", $this->ReadPropertyInteger("UpdateWarningInterval")*1000*60);
 			} else {
 				$this->SetTimerInterval("UpdateStormWarning", 0);
-			}
+			} */
 			//Jetzt Variablen erstellen/löschen
-			$keep = $this->ReadPropertyBoolean("FetchNow");
+			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
 			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
 			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, $keep);
 			$this->MaintainVariable("error", "Fehlermeldung", 3, "", 30, $keep);
