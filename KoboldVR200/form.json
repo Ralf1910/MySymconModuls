@@ -1,13 +1,13 @@
 {
   "elements":
   [
-	{ "type": "ValidationTextBox", "name": "SerialNumber", "caption": "Serialnumber" },
-	{ "type": "Label", "label": "Secrect Key fuer den Kobol Sauger" },
-	{ "type": "ValidationTextBox", "name": "SecretKey", "caption": "SecretKey" },
-	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren waehrend des Saugens" },
-	{ "type": "IntervalBox", "name": "UpdateKoboldWorking", "caption": "Minutes" },
-	{ "type": "Label", "label": "Kobold Daten alle X Minuten aktualisieren waehrend des Ladens" },
-	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "Minutes" }
+	{ "type": "ValidationTextBox", "name": "SerialNumber", "caption": "serialnumber" },
+	{ "type": "Label", "label": "secrect key for the Kobold" },
+	{ "type": "ValidationTextBox", "name": "SecretKey", "caption": "secret key" },
+	{ "type": "Label", "label": "Update Kobold data every X minutes during working." },
+	{ "type": "IntervalBox", "name": "UpdateKoboldWorking", "caption": "ninutes" },
+	{ "type": "Label", "label": "Update Kobold data every X minutes during charging." },
+	{ "type": "IntervalBox", "name": "UpdateKoboldCharging", "caption": "minutes" }
   ],
  "actions":
   [
