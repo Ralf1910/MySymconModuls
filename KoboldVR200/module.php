@@ -2,12 +2,11 @@
 // Klassendefinition
 class KoboldVR200 extends IPSModule {
 
-	protected $baseUrl = "https://nucleo.ksecosys.com/vendors/vorwerk/robots/";
 
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
-		$this->RegisterPropertyString("BaseURL", $baseURL);
+		$this->RegisterPropertyString("BaseURL", "https://nucleo.ksecosys.com/vendors/vorwerk/robots/");
 		$this->RegisterPropertyString("SerialNumber", "");
 		$this->RegisterPropertyString("SecretKey", "");
 		$this->RegisterPropertyInteger("UpdateKoboldWorking", 3);
