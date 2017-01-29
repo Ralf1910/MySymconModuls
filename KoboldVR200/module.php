@@ -22,8 +22,8 @@ class KoboldVR200 extends IPSModule {
 //		$this->CreateVarProfileWGWWindSpeedkmh();
 //		$this->CreateVarProfileWGWUVIndex();
 		//Timer erstellen
-//		$this->RegisterTimer("UpdateWorking", $this->ReadPropertyInteger("UpdateKoboldWorking"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
-//		$this->RegisterTimer("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateWorking", $this->ReadPropertyInteger("UpdateKoboldWorking"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateCharging", $this->ReadPropertyInteger("UpdateKoboldCharging"), 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
 	}
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
@@ -69,34 +69,7 @@ class KoboldVR200 extends IPSModule {
 		}
 	}
 
-	/*
-		* VR200 Api.
-		* Helper class to make requests against Kobold API
-		*
-		* PHP port based on https://github.com/kangguru/botvac
-		*
-		* Author: Tom Rosenback tom.rosenback@gmail.com  2016
-		*/
-	private static function requestKobold($url, $payload = array(), $method = "POST", $headers = array()) {
-			$ch = curl_init($url);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-			if($method == "POST") {
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-			}
-			$requestHeaders = array(
-				'Accept: application/vnd.neato.nucleo.v1'
-			);
-			if(count($headers) > 0) {
-				$requestHeaders = array_merge($requestHeaders, $headers);
-			}
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
-			$result = curl_exec($ch);
-			curl_close($ch);
-			return json_decode($result, true);
-	}
+
 
 	public function UpdateSerialAndKey() {
 
@@ -310,7 +283,34 @@ class KoboldVR200 extends IPSModule {
 			}
 			return $result;
 	}
-
+	/*
+		* VR200 Api.
+		* Helper class to make requests against Kobold API
+		*
+		* PHP port based on https://github.com/kangguru/botvac
+		*
+		* Author: Tom Rosenback tom.rosenback@gmail.com  2016
+		*/
+	private static function requestKobold($url, $payload = array(), $method = "POST", $headers = array()) {
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+			if($method == "POST") {
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+			}
+			$requestHeaders = array(
+				'Accept: application/vnd.neato.nucleo.v1'
+			);
+			if(count($headers) > 0) {
+				$requestHeaders = array_merge($requestHeaders, $headers);
+			}
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
+			$result = curl_exec($ch);
+			curl_close($ch);
+			return json_decode($result, true);
+	}
 
 
  }
