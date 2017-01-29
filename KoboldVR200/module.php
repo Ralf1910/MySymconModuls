@@ -75,7 +75,6 @@ class KoboldVR200 extends IPSModule {
 
 	public function UpdateKoboldData() {
 		$result = $this->doAction("getRobotState");
-		print_r $result;
 
 		/** if ($this->ReadPropertyBoolean("FetchNow")) {
 			//Daten vom Kobold holen
