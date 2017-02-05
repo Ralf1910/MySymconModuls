@@ -1,7 +1,7 @@
 <?
 //  Modul zur Steuerung des Vorwerk Kobold VR200
 //
-//	Version 0.8
+//	Version 0.9
 //
 // ************************************************************
 
@@ -143,7 +143,7 @@ class KoboldVR200 extends IPSModule {
 			IPS_CreateVariableProfile("VR200.Action", 1);
 			IPS_SetVariableProfileText("VR200.Action", "", "");
 			IPS_SetVariableProfileAssociation("VR200.Action", 0, "Nicht aktiv", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.Action", 1, "fährt", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.Action", 1, "reinigt", "", 0xFFFF00);
 			IPS_SetVariableProfileAssociation("VR200.Action", 2, "2", "", 0xFFFF00);
 			IPS_SetVariableProfileAssociation("VR200.Action", 4, "Fahre zurück zur Basis", "", 0xFFFF00);
 		 }
@@ -174,7 +174,8 @@ class KoboldVR200 extends IPSModule {
 			IPS_CreateVariableProfile("VR200.State", 1);
 			IPS_SetVariableProfileText("VR200.State", "", "");
 			IPS_SetVariableProfileAssociation("VR200.State", 1, "angehalten", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.State", 2, "reinigt", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.State", 2, "unterwegs", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.State", 3, "pausiert", "", 0xFFFF00);
 			IPS_SetVariableProfileAssociation("VR200.State", 4, "Weg blockiert", "", 0xFFFF00);
 		 }
 	}
