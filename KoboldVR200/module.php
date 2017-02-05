@@ -179,7 +179,7 @@ class KoboldVR200 extends IPSModule {
 	private function CreateVarProfileVR200Category() {
 		if (!IPS_VariableProfileExists("VR200.Category")) {
 			IPS_CreateVariableProfile("VR200.Category", 1);
-			IPS_SetVariableProfileText("VR200.Categroy", "", "");
+			IPS_SetVariableProfileText("VR200.Category", "", "");
 			IPS_SetVariableProfileAssociation("VR200.Category", 1, "???", "", 0xFFFF00);
 			IPS_SetVariableProfileAssociation("VR200.Category", 2, "???", "", 0xFFFF00);
 		 }
