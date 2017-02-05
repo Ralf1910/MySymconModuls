@@ -115,11 +115,11 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
 		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
 		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
-		SetValue($this->GetIDForIdent("availableCommandsStart", $robotState['availableCommands']['start']);
-		SetValue($this->GetIDForIdent("availableCommandsStop", $robotState['availableCommands']['stop']);
-		SetValue($this->GetIDForIdent("availableCommandsPause", $robotState['availableCommands']['pause']);
-		SetValue($this->GetIDForIdent("availableCommandsResume", $robotState['availableCommands']['resume']);
-		SetValue($this->GetIDForIdent("availableCommandsGoToBase", $robotState['availableCommands']['goToBase']);
+		SetValue($this->GetIDForIdent("availableCommandsStart"), $robotState['availableCommands']['start']);
+		SetValue($this->GetIDForIdent("availableCommandsStop"), $robotState['availableCommands']['stop']);
+		SetValue($this->GetIDForIdent("availableCommandsPause"), $robotState['availableCommands']['pause']);
+		SetValue($this->GetIDForIdent("availableCommandsResume"), $robotState['availableCommands']['resume']);
+		SetValue($this->GetIDForIdent("availableCommandsGoToBase"), $robotState['availableCommands']['goToBase']);
 	}
 
 
