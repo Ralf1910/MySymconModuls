@@ -31,6 +31,8 @@ class BSR extends IPSModule {
 		$this->MaintainVariable("nextGruenerPunktDate", "nächster Abholtermin Grüner Punkt", 1, "~UnixTimestampDate", 30, true);
 		$this->MaintainVariable("GruenerPunktAbholungInTagen", "Grüner Punkt Abholung in Tagen", 3, "", 40, true);
 
+		$this->UpdateAbholtermine();
+
 		//Instanz ist aktiv
 		$this->SetStatus(102);
 	}
@@ -51,7 +53,7 @@ class BSR extends IPSModule {
 			$dateTimestampHausmuellTermin	= strtotime($HausmuellTermin);
 
 			if ($dateTimestampHausmuellTermin > $dateTimestampNow) {
-				SetValue($this->GetIDForIdent("nextBSRDate"), $HausmuellTermin);
+				SetValue($this->GetIDForIdent("nextBSRDate"), $dateTimestampHausmuellTermin);
 				return;
 			}
 		}
