@@ -30,6 +30,7 @@ class KoboldVR200 extends IPSModule {
 		$this->CreateVarProfileVR200isDocked();
 		$this->CreateVarProfileVR200isScheduleEnabled();
 		$this->CreateVarProfileVR200dockHasBeenSeen();
+		$this->CreateVarProfileVR200Commands();
 
 		// Updates einstellen
 		$this->RegisterTimer("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKobold")*60*1000, 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
@@ -54,6 +55,7 @@ class KoboldVR200 extends IPSModule {
 			$this->CreateVarProfileVR200isDocked();
 			$this->CreateVarProfileVR200isScheduleEnabled();
 			$this->CreateVarProfileVR200dockHasBeenSeen();
+			$this->CreateVarProfileVR200Commands();
 
 			// Variablen aktualisieren
 			$this->MaintainVariable("lastCleaning", "letzte Reinigung", 1, "~UnixTimestampDate", 10, true);
