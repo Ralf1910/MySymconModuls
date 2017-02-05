@@ -26,9 +26,9 @@ class BSR extends IPSModule {
 
 
 		// Variablen aktualisieren
-		$this->MaintainVariable("nextBSRDate", "nächster Abholtermin BSR", 1, "~UnixTimestampDate", 10, true);
+		$this->MaintainVariable("BSRNextDate", "BSR nächster Abholtermin", 1, "~UnixTimestampDate", 10, true);
 		$this->MaintainVariable("BSRAbholungAnzeige", "BSR Abholung Anzeige", 3, "", 20, true);
-		$this->MaintainVariable("nextGruenerPunktDate", "nächster Abholtermin Grüner Punkt", 1, "~UnixTimestampDate", 30, true);
+		$this->MaintainVariable("GruenerPunktNextDate", "Grüner Punkt nächster Abholtermin", 1, "~UnixTimestampDate", 30, true);
 		$this->MaintainVariable("GruenerPunktAbholungAnzeige", "Grüner Punkt Abholung Anzeige", 3, "", 40, true);
 
 		$this->UpdateAbholtermine();
@@ -48,17 +48,40 @@ class BSR extends IPSModule {
 		$morgen 			= date("d.m.Y", time() + 3600*24);
  		$uebermorgen 		= date("d.m.Y", time() + 3600*24*2);
 
+
+		// Nächstes Abholdatum für die BSR aktualisieren
 		foreach ($AbholungHausmuell as &$HausmuellTermin) {
 			$dateTimestampNow	= time();
 			$dateTimestampHausmuellTermin	= strtotime($HausmuellTermin);
 
 			if ($dateTimestampHausmuellTermin > $dateTimestampNow) {
-				SetValue($this->GetIDForIdent("nextBSRDate"), $dateTimestampHausmuellTermin);
+				SetValue($this->GetIDForIdent("BSRNextDate"), $dateTimestampHausmuellTermin);
 				SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Am ".$HausmuellTermin);
 				if (strcmp($heute, 		 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Heute");
 				if (strcmp($morgen, 	 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Morgen");
 				if (strcmp($uebermorgen, $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Übermorgen");
 				return;
+			} else {
+				SetValue($this->GetIDForIdent("BSRNextDate"), 0);
+				SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "unbekannt");
+			}
+		}
+
+		// Nächstes Abholdatum für den grünen Punkt aktualisieren
+		foreach ($AbholungWertstoffe as &$WertstoffeTermin) {
+			$dateTimestampNow	= time();
+			$dateTimestampWertstfoffeTermin	= strtotime($WertstoffeTermin);
+
+			if ($dateTimestampWertstoffeTermin > $dateTimestampNow) {
+				SetValue($this->GetIDForIdent("GruenerPunktNextDate"), $dateTimestampWertstoffeTermin);
+				SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "Am ".$WertstoffeTermin);
+				if (strcmp($heute, 		 $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "Heute");
+				if (strcmp($morgen, 	 $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAnzeige"), "Morgen");
+				if (strcmp($uebermorgen, $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAnzeige"), "Übermorgen");
+				return;
+			} else {
+				SetValue($this->GetIDForIdent("GruenerPunktNextDate"), 0);
+				SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "unbekannt.");
 			}
 		}
 	}
