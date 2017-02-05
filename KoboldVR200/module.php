@@ -110,18 +110,18 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("cleaningModifier"), $robotState['cleaning']['modifier']);
 		SetValue($this->GetIDForIdent("cleaningSpotWidth"), $robotState['cleaning']['spotWidth']);
 		SetValue($this->GetIDForIdent("cleaningSpotHeight"), $robotState['cleaning']['spotHeight']);
-		SetValue($this->GetIDForIdent("detailsIsCharging"), $robotState['details']['isCharging']);
-		SetValue($this->GetIDForIdent("detailsIsDocked"), $robotState['details']['isDocked']);
-		SetValue($this->GetIDForIdent("detailsIsScheduleEnabled"), $robotState['details']['isScheduleEnabled']);
-		SetValue($this->GetIDForIdent("detailsDockHasBeenSeen"), $robotState['details']['dockHasBeenSeen']);
+		SetValue($this->GetIDForIdent("detailsIsCharging"), $this->ToBoolean($robotState['details']['isCharging']));
+		SetValue($this->GetIDForIdent("detailsIsDocked"), $this->ToBoolean($robotState['details']['isDocked']));
+		SetValue($this->GetIDForIdent("detailsIsScheduleEnabled"), $this->ToBoolean($robotState['details']['isScheduleEnabled']));
+		SetValue($this->GetIDForIdent("detailsDockHasBeenSeen"), $this->ToBoolean($robotState['details']['dockHasBeenSeen']));
 		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
 		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
 		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
-		SetValue($this->GetIDForIdent("availableCommandsStart"), $robotState['availableCommands']['start']);
-		SetValue($this->GetIDForIdent("availableCommandsStop"), $robotState['availableCommands']['stop']);
-		SetValue($this->GetIDForIdent("availableCommandsPause"), $robotState['availableCommands']['pause']);
-		SetValue($this->GetIDForIdent("availableCommandsResume"), $robotState['availableCommands']['resume']);
-		SetValue($this->GetIDForIdent("availableCommandsGoToBase"), $robotState['availableCommands']['goToBase']);
+		SetValue($this->GetIDForIdent("availableCommandsStart"), $this->ToBoolean($robotState['availableCommands']['start']));
+		SetValue($this->GetIDForIdent("availableCommandsStop"), $this->ToBoolean($robotState['availableCommands']['stop']));
+		SetValue($this->GetIDForIdent("availableCommandsPause"), $this->ToBoolean($robotState['availableCommands']['pause']));
+		SetValue($this->GetIDForIdent("availableCommandsResume"), $this->ToBoolean($robotState['availableCommands']['resume']));
+		SetValue($this->GetIDForIdent("availableCommandsGoToBase"), $this->ToBoolean($robotState['availableCommands']['goToBase']));
 	}
 
 
@@ -249,6 +249,13 @@ class KoboldVR200 extends IPSModule {
 		return $error;
 	}
 
+	// Integer Rückgabewerte in Boolean umwandeln
+	private function ToBoolean($value) {
+		if ($value == 1)
+			return true
+		else
+			return false;
+	}
 
 	// Roboter Status holen
 	public function getState() {
