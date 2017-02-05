@@ -52,11 +52,9 @@ class BSR extends IPSModule {
 
 			if ($dateTimestampHausmuellTermin > $dateTimestampNow)
 				SetValue($this->GetIDForIdent("nextBSRDate"), $HausmuellTermin);
-				return true;
+				return;
 			}
 		}
-
-		return false;
 	}
 
 
