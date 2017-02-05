@@ -252,7 +252,7 @@ class KoboldVR200 extends IPSModule {
 	// Integer Rückgabewerte in Boolean umwandeln
 	private function ToBoolean($value) {
 		if ($value == 1)
-			return true
+			return true;
 		else
 			return false;
 	}
