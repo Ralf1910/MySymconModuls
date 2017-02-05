@@ -14,7 +14,7 @@ class SimpleNetworkDevice extends IPSModule {
 
 		// IP Adresse
 		$this->RegisterPropertyString("IPAdresse", "");
-		$this->RegisterPropertyInteger("UpdateKobold", 1);
+		$this->RegisterPropertyInteger("Update", 1);
 
 		// Updates einstellen
 		$this->RegisterTimer("Update", $this->ReadPropertyInteger("Update")*60*1000, 'SND_Update($_IPS[\'TARGET\']);');

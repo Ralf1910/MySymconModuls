@@ -3,7 +3,7 @@
   [
 	{ "type": "ValidationTextBox", "name": "IPAdresse", "caption": "IP Adresse" },
 	{ "type": "Label", "label": "Update" },
-	{ "type": "IntervalBox", "name": "Update", "caption": "ninutes" }	
+	{ "type": "IntervalBox", "name": "Update", "caption": "minutes" }	
   ],
  "actions":
   [
