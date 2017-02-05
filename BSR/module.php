@@ -70,7 +70,7 @@ class BSR extends IPSModule {
 		// Nächstes Abholdatum für den grünen Punkt aktualisieren
 		foreach ($AbholungWertstoffe as &$WertstoffeTermin) {
 			$dateTimestampNow	= time();
-			$dateTimestampWertstfoffeTermin	= strtotime($WertstoffeTermin);
+			$dateTimestampWertstoffeTermin	= strtotime($WertstoffeTermin);
 
 			if ($dateTimestampWertstoffeTermin > $dateTimestampNow) {
 				SetValue($this->GetIDForIdent("GruenerPunktNextDate"), $dateTimestampWertstoffeTermin);
