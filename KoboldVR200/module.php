@@ -266,9 +266,7 @@ class KoboldVR200 extends IPSModule {
 	public function startCleaning() {
 		$params = array("category" => 2, "mode" => 2, "modifier" => 2);
 		SetValue($this->GetIDForIdent("lastCleaning"), time());
-		$result = $this->doAction("startCleaning", $params);
-		$this->getState();
-		return $result;
+		return $this->doAction("startCleaning", $params);
 	}
 
 	// Reinigung im Eco Modus starten
@@ -290,9 +288,7 @@ class KoboldVR200 extends IPSModule {
 
 	// Reinigung stoppen
 	public function stopCleaning() {
-		$result = $this->doAction("stopCleaning");
-		$this->getState();
-		return $result;
+		return $this->doAction("stopCleaning");
 	}
 
 	// Zurück zur Ladestation
