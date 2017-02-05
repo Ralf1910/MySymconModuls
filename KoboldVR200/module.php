@@ -233,8 +233,8 @@ class KoboldVR200 extends IPSModule {
 			if (!IPS_VariableProfileExists("VR200.Commands")) {
 				IPS_CreateVariableProfile("VR200.Commands", 0);
 				IPS_SetVariableProfileText("VR200.Commands", "", "");
-				IPS_SetVariableProfileAssociation("VR200.Commands", 0, "Befehl verfügbar", "", 0xFFFF00);
-				IPS_SetVariableProfileAssociation("VR200.Commands", 1, "Befehl nicht verfügbar", "", 0xFFFF00);
+				IPS_SetVariableProfileAssociation("VR200.Commands", 0, "Befehl nicht verfügbar", "", 0xFF0000);
+				IPS_SetVariableProfileAssociation("VR200.Commands", 1, "Befehl verfügbar", "", 0x00FF00);
 			 }
 	}
 
