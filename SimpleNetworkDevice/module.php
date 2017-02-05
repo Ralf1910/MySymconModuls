@@ -13,7 +13,7 @@ class SimpleNetworkDevice extends IPSModule {
 		parent::Create();
 
 		// IP Adresse
-		$this->RegisterPropertyString("IPAdresse", "");
+		$this->RegisterPropertyString("IPAdresse", "127.0.0.1");
 		$this->RegisterPropertyInteger("Update", 1);
 
 		// Updates einstellen
