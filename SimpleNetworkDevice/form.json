@@ -1,7 +1,6 @@
 {
   "elements":
   [
-	
 	{ "type": "ValidationTextBox", "name": "IPAdresse", "caption": "IP Adresse" },
 	{ "type": "Label", "label": "Update" },
 	{ "type": "IntervalBox", "name": "Update", "caption": "ninutes" }	

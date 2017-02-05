@@ -48,5 +48,5 @@ class SimpleNetworkDevice extends IPSModule {
 	}
 
 
- }
+}
 
