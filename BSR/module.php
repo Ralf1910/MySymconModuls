@@ -37,7 +37,7 @@ class BSR extends IPSModule {
 		$this->SetStatus(102);
 	}
 
-
+	// Aktualisierung der Variablen zur Darstellung der Abholtermine
 	public function UpdateAbholtermine() {
 		$AbholungHausmuell 	= array("11.01.2017", "25.01.2017", "08.02.2017", "22.02.2017", "08.03.2017", "22.03.2017", "05.04.2017", "20.04.2017", "04.05.2017", "17.05.2017", "31.05.2017", "14.06.2017", "28.06.2017",
 									"12.07.2017", "26.07.2017", "09.08.2017", "23.08.2017", "06.09.2017", "20.09.2017", "05.10.2017", "18.10.2017", "02.11.2017", "15.11.2017", "29.11.2017", "13.12.2017", "28.12.2017");
@@ -60,7 +60,7 @@ class BSR extends IPSModule {
 				if (strcmp($heute, 		 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Heute");
 				if (strcmp($morgen, 	 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Morgen");
 				if (strcmp($uebermorgen, $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Übermorgen");
-				return;
+				break;
 			} else {
 				SetValue($this->GetIDForIdent("BSRNextDate"), 0);
 				SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "unbekannt");
@@ -78,7 +78,7 @@ class BSR extends IPSModule {
 				if (strcmp($heute, 		 $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "Heute");
 				if (strcmp($morgen, 	 $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAnzeige"), "Morgen");
 				if (strcmp($uebermorgen, $WertstoffeTermin) == 0) 	SetValue($this->GetIDForIdent("GruenerPunktAnzeige"), "Übermorgen");
-				return;
+				break;
 			} else {
 				SetValue($this->GetIDForIdent("GruenerPunktNextDate"), 0);
 				SetValue($this->GetIDForIdent("GruenerPunktAbholungAnzeige"), "unbekannt.");
