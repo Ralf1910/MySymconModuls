@@ -266,7 +266,9 @@ class KoboldVR200 extends IPSModule {
 	public function startCleaning() {
 		$params = array("category" => 2, "mode" => 2, "modifier" => 2);
 		SetValue($this->GetIDForIdent("lastCleaning"), time());
-		return $this->doAction("startCleaning", $params);
+		$result = $this->doAction("startCleaning", $params);
+		$this->getState();
+		return $result;
 	}
 
 	// Reinigung im Eco Modus starten
@@ -288,39 +290,50 @@ class KoboldVR200 extends IPSModule {
 
 	// Reinigung stoppen
 	public function stopCleaning() {
-		return $this->doAction("stopCleaning");
+		$result = $this->doAction("stopCleaning");
+		$this->getState();
+		return $result;
 	}
 
+	// Zurück zur Ladestation
 	public function goToBase() {
-			return $this->doAction("goToBase");
-		}
-		public function enableSchedule() {
-			return $this->doAction("enableSchedule");
-		}
-		public function disableSchedule() {
-			return $this->doAction("disableSchedule");
-		}
-		public function getSchedule() {
-			return $this->doAction("getSchedule");
-		}
-		protected function doAction($command, $params = false) {
-			$result = array("message" => "no serial or secret");
-			if($this->ReadPropertyString("SerialNumber") !== false && $this->ReadPropertyString("SecretKey") !== false) {
-				$payload = array("reqId" => "1", "cmd" => $command);
-				if($params !== false) {
-					$payload["params"] = $params;
-				}
-				$payload = json_encode($payload);
-				$date = gmdate("D, d M Y H:i:s")." GMT";
-				$data = implode("\n", array(strtolower($this->ReadPropertyString("SerialNumber")), $date, $payload));
-				$hmac = hash_hmac("sha256", $data, $this->ReadPropertyString("SecretKey"));
-				$headers = array(
-		    	"Date: ".$date,
-		    	"Authorization: NEATOAPP ".$hmac
-				);
-				$result = $this->requestKobold($this->ReadPropertyString("BaseURL").$this->ReadPropertyString("SerialNumber")."/messages", $payload, "POST", $headers);
+		return $this->doAction("goToBase");
+	}
+
+	// Zeitplan aktivieren
+	public function enableSchedule() {
+		return $this->doAction("enableSchedule");
+	}
+
+	// Zeitplan deaktivieren
+	public function disableSchedule() {
+		return $this->doAction("disableSchedule");
+	}
+
+	// Zeitplan ermitteln
+	public function getSchedule() {
+		return $this->doAction("getSchedule");
+	}
+
+	// Action ausführen
+	protected function doAction($command, $params = false) {
+		$result = array("message" => "no serial or secret");
+		if($this->ReadPropertyString("SerialNumber") !== false && $this->ReadPropertyString("SecretKey") !== false) {
+			$payload = array("reqId" => "1", "cmd" => $command);
+			if($params !== false) {
+				$payload["params"] = $params;
 			}
-			return $result;
+			$payload = json_encode($payload);
+			$date = gmdate("D, d M Y H:i:s")." GMT";
+			$data = implode("\n", array(strtolower($this->ReadPropertyString("SerialNumber")), $date, $payload));
+			$hmac = hash_hmac("sha256", $data, $this->ReadPropertyString("SecretKey"));
+			$headers = array(
+	    	"Date: ".$date,
+	    	"Authorization: NEATOAPP ".$hmac
+			);
+			$result = $this->requestKobold($this->ReadPropertyString("BaseURL").$this->ReadPropertyString("SerialNumber")."/messages", $payload, "POST", $headers);
+		}
+		return $result;
 	}
 	/*
 		* VR200 Api.
@@ -354,9 +367,3 @@ class KoboldVR200 extends IPSModule {
 
  }
 
- // Fehlermeldungen
- //
- // ui_error_dust_bin_full
- // ui_error_dust_bin_emptied
- // ui_alert_invalid
- //  ui_error_navigation_falling
