@@ -76,11 +76,11 @@ class KoboldVR200 extends IPSModule {
 			$this->MaintainVariable("detailsCharge", "Ladezustand", 1, "VR200.Charge", 150, true);
 			$this->MaintainVariable("metaModelName", "Modelname", 3, "", 160, true);
 			$this->MaintainVariable("metaFirmware", "Firmware", 3, "", 170, true);
-			$this->MaintainVariable("availableCommandsStart", "Kommando Start", 0, "VR200.commands", 200, true);
-			$this->MaintainVariable("availableCommandsStop", "Kommando Stop", 0, "VR200.commands", 210, true);
-			$this->MaintainVariable("availableCommandsPause", "Kommando Pause", 0, "VR200.commands", 220, true);
-			$this->MaintainVariable("availableCommandsResume", "Kommando Resume", 0, "VR200.commands", 230, true);
-			$this->MaintainVariable("availableCommandsGoToBase", "Kommando GoToBase", 0, "VR200.commands", 240, true);
+			$this->MaintainVariable("availableCommandsStart", "Kommando Start", 0, "VR200.Commands", 200, true);
+			$this->MaintainVariable("availableCommandsStop", "Kommando Stop", 0, "VR200.Commands", 210, true);
+			$this->MaintainVariable("availableCommandsPause", "Kommando Pause", 0, "VR200.Commands", 220, true);
+			$this->MaintainVariable("availableCommandsResume", "Kommando Resume", 0, "VR200.Commands", 230, true);
+			$this->MaintainVariable("availableCommandsGoToBase", "Kommando GoToBase", 0, "VR200.Commands", 240, true);
 
 			//Instanz ist aktiv
 			$this->SetStatus(102);
