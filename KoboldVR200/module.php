@@ -153,8 +153,8 @@ class KoboldVR200 extends IPSModule {
 		if (!IPS_VariableProfileExists("VR200.isCharging")) {
 			IPS_CreateVariableProfile("VR200.isCharging", 0);
 			IPS_SetVariableProfileText("VR200.isCharging", "", "");
-			IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "l‰dt", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "entl‰dt", "", 0x66CC33);
+			IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "entl‰dt", "", 0xFF0000);
+			IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "l‰dt", "", 0x00FF00);
 		 }
 	}
 
@@ -213,8 +213,8 @@ class KoboldVR200 extends IPSModule {
 		if (!IPS_VariableProfileExists("VR200.isScheduleEnabled")) {
 			IPS_CreateVariableProfile("VR200.isScheduleEnabled", 0);
 			IPS_SetVariableProfileText("VR200.isScheduleEnabled", "", "");
-			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 0, "Zeitplan deaktiviert", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 1, "Zeitplan aktiviert", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 0, "Zeitplan deaktiviert", "", 0xFF0000);
+			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 1, "Zeitplan aktiviert", "", 0x00FF00);
 		 }
 	}
 
@@ -223,8 +223,8 @@ class KoboldVR200 extends IPSModule {
 		if (!IPS_VariableProfileExists("VR200.dockHasBeenSeen")) {
 			IPS_CreateVariableProfile("VR200.dockHasBeenSeen", 0);
 			IPS_SetVariableProfileText("VR200.dockHasBeenSeen", "", "");
-			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 0, "Dockingstation in Sichtweite", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 1, "Dockingstation auﬂer Sichtweite", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 0, "Dockingstation auﬂer Sichtweite", "", 0xFF0000);
+			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 1, "Dockingstation in Sichtweite", "", 0x00FF00);
 		 }
 	}
 
