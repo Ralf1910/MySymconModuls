@@ -1,5 +1,10 @@
 <?
-// Klassendefinition
+//  Modul zur Steuerung des Vorwerk Kobold VR200
+//
+//	Version 0.8
+//
+// ************************************************************
+
 class KoboldVR200 extends IPSModule {
 
 
@@ -9,57 +14,66 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyString("BaseURL", "https://nucleo.ksecosys.com/vendors/vorwerk/robots/");
 		$this->RegisterPropertyString("SerialNumber", "");
 		$this->RegisterPropertyString("SecretKey", "");
-		$this->RegisterPropertyInteger("UpdateKoboldWorking", 1);
-		$this->RegisterPropertyInteger("UpdateKoboldCharging", 5);
+		$this->RegisterPropertyInteger("UpdateKobold", 1);
 		$this->RegisterPropertyInteger("CleaningIntervalWinter", 2);
 		$this->RegisterPropertyInteger("CleaningIntervalSpring", 3);
 		$this->RegisterPropertyInteger("CleaningIntervalSummer", 3);
 		$this->RegisterPropertyInteger("CleaningIntervalAutum", 2);
 
-		//Variablenprofil anlegen ($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon)
+		// Variablenprofile anlegen
+		$this->CreateVarProfileVR200Action();
 		$this->CreateVarProfileVR200IsCharging();
 		$this->CreateVarProfileVR200Charge();
-		$this->CreateVarProfileVR200Status();
+		$this->CreateVarProfileVR200State();
+		$this->CreateVarProfileVR200Mode();
+		$this->CreateVarProfileVR200Category();
+		$this->CreateVarProfileVR200isDocked();
+		$this->CreateVarProfileVR200isScheduleEnabled();
+		$this->CreateVarProfileVR200dockHasBeenSeen();
 
-//		$this->CreateVarProfile("WGW.Rainfall", 2, " Liter/m²" ,0 , 10, 0 , 2, "Rainfall");
-//		$this->CreateVarProfile("WGW.Sunray", 2, " W/m²", 0, 2000, 0, 2, "Sun");
-//		$this->CreateVarProfile("WGW.Visibility", 2, " km", 0, 0, 0, 2, "");
-//		$this->CreateVarProfileWGWWindSpeedkmh();
-//		$this->CreateVarProfileWGWUVIndex();
-		//Timer erstellen
-		$this->RegisterTimer("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000, 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
+		// Updates einstellen
+		$this->RegisterTimer("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKobold")*60*1000, 'VR200_UpdateKoboldData($_IPS[\'TARGET\']);');
 	}
+
+
 	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
 	public function ApplyChanges() {
 		// Diese Zeile nicht löschen
 		parent::ApplyChanges();
 		if (($this->ReadPropertyString("SerialNumber") != "") && ($this->ReadPropertyString("SecretKey") != "")){
 			//Timerzeit setzen in Minuten
-			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
+			$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKobold")*60*1000);
+
 			// Variablenprofile anlegen
+			$this->CreateVarProfileVR200Action();
 			$this->CreateVarProfileVR200IsCharging();
 			$this->CreateVarProfileVR200Charge();
-			$this->CreateVarProfileVR200Status();
+			$this->CreateVarProfileVR200State();
+			$this->CreateVarProfileVR200Mode();
+			$this->CreateVarProfileVR200Category();
+			$this->CreateVarProfileVR200isDocked();
+			$this->CreateVarProfileVR200isScheduleEnabled();
+			$this->CreateVarProfileVR200dockHasBeenSeen();
 
-			$keep = true; // $this->ReadPropertyBoolean("FetchNow");
-			$this->MaintainVariable("lastCleaning", "letzte Reinigung", 1, "~UnixTimestampDate", 10, $keep);
-			$this->MaintainVariable("version", "Version", 1, "", 10, $keep);
-			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, $keep);
-			$this->MaintainVariable("error", "Fehlermeldung", 3, "", 30, $keep);
-			$this->MaintainVariable("state", "Status", 1, "VR200.Status", 40, $keep);
-			$this->MaintainVariable("action", "Action", 1, "", 50, $keep);
-			$this->MaintainVariable("cleaningCategory", "Reinigungskategory", 1, "", 60, $keep);
-			$this->MaintainVariable("cleaningMode", "Reinigungsmodus", 1, "VR200.Mode", 70, $keep);
-			$this->MaintainVariable("cleaningModifier", "Reinigungsmodifier", 1, "", 80, $keep);
-			$this->MaintainVariable("cleaningSpotWidth", "Spotbreite", 1, "", 90, $keep);
-			$this->MaintainVariable("cleaningSpotHeight", "Spothöhe", 1, "", 100, $keep);
-			$this->MaintainVariable("detailsIsCharging", "Lädt", 0, "VR200.isCharging", 110, $keep);
-			$this->MaintainVariable("detailsIsDocked", "In der Ladestation", 0, "", 120, $keep);
-			$this->MaintainVariable("detailsIsScheduleEnabled", "Zeitplan aktiviert", 0, "", 130, $keep);
-			$this->MaintainVariable("detailsDockHasBeenSeen", "Dockingstation gesichtet", 0, "", 140, $keep);
-			$this->MaintainVariable("detailsCharge", "Ladezustand", 1, "VR200.Charge", 150, $keep);
-			$this->MaintainVariable("metaModelName", "Modelname", 3, "", 160, $keep);
-			$this->MaintainVariable("metaFirmware", "Firmware", 3, "", 170, $keep);
+			// Variablen aktualisieren
+			$this->MaintainVariable("lastCleaning", "letzte Reinigung", 1, "~UnixTimestampDate", 10, true);
+			$this->MaintainVariable("version", "Version", 1, "", 10, true);
+			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, true);
+			$this->MaintainVariable("error", "Fehlermeldung", 3, "", 30, true);
+			$this->MaintainVariable("state", "Status", 1, "VR200.State", 40, true);
+			$this->MaintainVariable("action", "Action", 1, "", 50, true);
+			$this->MaintainVariable("cleaningCategory", "Reinigungskategory", 1, "VR200.Category", 60, true);
+			$this->MaintainVariable("cleaningMode", "Reinigungsmodus", 1, "VR200.Mode", 70, true);
+			$this->MaintainVariable("cleaningModifier", "Reinigungsmodifier", 1, "", 80, true);
+			$this->MaintainVariable("cleaningSpotWidth", "Spotbreite", 1, "", 90, true);
+			$this->MaintainVariable("cleaningSpotHeight", "Spothöhe", 1, "", 100, true);
+			$this->MaintainVariable("detailsIsCharging", "Lädt", 0, "VR200.isCharging", 110, true);
+			$this->MaintainVariable("detailsIsDocked", "In der Ladestation", 0, "VR200.isDocked", 120, true);
+			$this->MaintainVariable("detailsIsScheduleEnabled", "Zeitplan aktiviert", 0, "VR200.isScheduleEnabled", 130, true);
+			$this->MaintainVariable("detailsDockHasBeenSeen", "Dockingstation gesichtet", 0, "VR200.dockHasBeenSeen", 140, true);
+			$this->MaintainVariable("detailsCharge", "Ladezustand", 1, "VR200.Charge", 150, true);
+			$this->MaintainVariable("metaModelName", "Modelname", 3, "", 160, true);
+			$this->MaintainVariable("metaFirmware", "Firmware", 3, "", 170, true);
 
 			//Instanz ist aktiv
 			$this->SetStatus(102);
@@ -80,7 +94,7 @@ class KoboldVR200 extends IPSModule {
 
 		SetValue($this->GetIDForIdent("version"), $robotState['version']);
 		SetValue($this->GetIDForIdent("reqId"), $robotState['reqId']);
-		SetValue($this->GetIDForIdent("error"), $robotState['error']);
+		SetValue($this->GetIDForIdent("error"), TranslateErrorMessages($robotState['error']));
 		SetValue($this->GetIDForIdent("state"), $robotState['state']);
 		SetValue($this->GetIDForIdent("action"), $robotState['action']);
 		SetValue($this->GetIDForIdent("cleaningCategory"), $robotState['cleaning']['category']);
@@ -95,11 +109,6 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
 		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
 		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
-
-	//	if ($this->ReadPropertyInteger("state") == 1)
-	//		$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldCharging")*60*1000);
-	//	else
-	//		$this->SetTimerInterval("UpdateKoboldData", $this->ReadPropertyInteger("UpdateKoboldWorking")*60*1000);
 	}
 
 
@@ -115,46 +124,105 @@ class KoboldVR200 extends IPSModule {
 		 }
 	}
 
+	//Variablenprofil für den Action erstellen
+	private function CreateVarProfileVR200Action() {
+		if (!IPS_VariableProfileExists("VR200.Action")) {
+			IPS_CreateVariableProfile("VR200.Action", 1);
+			IPS_SetVariableProfileText("VR200.Action", "", "");
+			IPS_SetVariableProfileAssociation("VR200.Action", 1, "1", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.Action", 2, "2", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.Action", 4, "4", "", 0xFFFF00);
+		 }
+	}
+
 	//Variablenprofil für die Battery erstellen
 	private function CreateVarProfileVR200IsCharging() {
-			if (!IPS_VariableProfileExists("VR200.isCharging")) {
-				IPS_CreateVariableProfile("VR200.isCharging", 0);
-				IPS_SetVariableProfileText("VR200.isCharging", "", "");
-				IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "entlädt", "", 0xFFFF00);
-				IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "lädt", "", 0x66CC33);
-			 }
+		if (!IPS_VariableProfileExists("VR200.isCharging")) {
+			IPS_CreateVariableProfile("VR200.isCharging", 0);
+			IPS_SetVariableProfileText("VR200.isCharging", "", "");
+			IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "entlädt", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "lädt", "", 0x66CC33);
+		 }
 	}
 
 	//Variablenprofil für die Battery erstellen
 	private function CreateVarProfileVR200Charge() {
-			if (!IPS_VariableProfileExists("VR200.Charge")) {
-				IPS_CreateVariableProfile("VR200.Charge", 1);
-				IPS_SetVariableProfileValues("VR200.Charge", 0, 100, 1);
-				IPS_SetVariableProfileText("VR200.Charge", "", " %");
-			 }
+		if (!IPS_VariableProfileExists("VR200.Charge")) {
+			IPS_CreateVariableProfile("VR200.Charge", 1);
+			IPS_SetVariableProfileValues("VR200.Charge", 0, 100, 1);
+			IPS_SetVariableProfileText("VR200.Charge", "", " %");
+		 }
 	}
 
 	//Variablenprofil für den Status erstellen
-	private function CreateVarProfileVR200Status() {
-			if (!IPS_VariableProfileExists("VR200.Status")) {
-				IPS_CreateVariableProfile("VR200.Status", 1);
-				IPS_SetVariableProfileText("VR200.Status", "", "");
-				IPS_SetVariableProfileAssociation("VR200.Status", 1, "angehalten", "", 0xFFFF00);
-				IPS_SetVariableProfileAssociation("VR200.Status", 2, "reinigt", "", 0xFFFF00);
-			 }
+	private function CreateVarProfileVR200State() {
+		if (!IPS_VariableProfileExists("VR200.State")) {
+			IPS_CreateVariableProfile("VR200.State", 1);
+			IPS_SetVariableProfileText("VR200.State", "", "");
+			IPS_SetVariableProfileAssociation("VR200.State", 1, "angehalten", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.State", 2, "reinigt", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.State", 4, "Weg blockiert", "", 0xFFFF00);
+		 }
 	}
 
+    // Variablenprofil für den Reinigungmodus
 	private function CreateVarProfileVR200Mode() {
-				if (!IPS_VariableProfileExists("VR200.Mode")) {
-					IPS_CreateVariableProfile("VR200.Mode", 1);
-					IPS_SetVariableProfileText("VR200.Mode", "", "");
-					IPS_SetVariableProfileAssociation("VR200.Mode", 1, "normal", "", 0xFFFF00);
-					IPS_SetVariableProfileAssociation("VR200.Mode", 2, "eco", "", 0xFFFF00);
-				 }
+		if (!IPS_VariableProfileExists("VR200.Mode")) {
+			IPS_CreateVariableProfile("VR200.Mode", 1);
+			IPS_SetVariableProfileText("VR200.Mode", "", "");
+			IPS_SetVariableProfileAssociation("VR200.Mode", 1, "normal", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.Mode", 2, "eco", "", 0xFFFF00);
+		 }
 	}
 
+	// Variablenprofil für den Categroy
+	private function CreateVarProfileVR200Category() {
+		if (!IPS_VariableProfileExists("VR200.Category")) {
+			IPS_CreateVariableProfile("VR200.Category", 1);
+			IPS_SetVariableProfileText("VR200.Categroy", "", "");
+			IPS_SetVariableProfileAssociation("VR200.Category", 1, "???", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.Category", 2, "???", "", 0xFFFF00);
+		 }
+	}
 
+	 // Variablenprofil für den Dockingmodus erstellen
+	private function CreateVarProfileVR200isDocked() {
+		if (!IPS_VariableProfileExists("VR200.isDocked")) {
+			IPS_CreateVariableProfile("VR200.isDocked", 0);
+			IPS_SetVariableProfileText("VR200.isDocked", "", "");
+			IPS_SetVariableProfileAssociation("VR200.isDocked", 0, "unterwegs", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.isDocked", 1, "in der Dockingstation", "", 0xFFFF00);
+		 }
+	}
 
+	 // Variablenprofil für den Zeitplan
+	private function CreateVarProfileVR200isScheduleEnabled() {
+		if (!IPS_VariableProfileExists("VR200.isScheduleEnabled")) {
+			IPS_CreateVariableProfile("VR200.isScheduleEnabled", 0);
+			IPS_SetVariableProfileText("VR200.isScheduleEnabled", "", "");
+			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 0, "Zeitplan deaktiviert", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 1, "Zeitplan aktiviert", "", 0xFFFF00);
+		 }
+	}
+
+		 // Variablenprofil für die Sichtung der Dockingstation
+	private function CreateVarProfileVR200dockHasBeenSeen() {
+		if (!IPS_VariableProfileExists("VR200.dockHasBeenSeen")) {
+			IPS_CreateVariableProfile("VR200.dockHasBeenSeen", 0);
+			IPS_SetVariableProfileText("VR200.dockHasBeenSeen", "", "");
+			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 0, "Dockingstation außer Sichtweite", "", 0xFFFF00);
+			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 1, "Dockingstation in Sichtweite", "", 0xFFFF00);
+		 }
+	}
+
+	// Fehlermeldungen des VR200 in Klartext übersetzen
+	private function TranslateErrorMessages($error) {
+		if (strcasecmp($error, "ui_error_navigation_falling") == 0) 	return "Weg bitte freiräumen";
+		if (strcasecmp($error, "ui_alert_invalid") == 0) 				return "Alles OK";
+		if (strcasecmp($error, "ui_error_dust_bin_full") == 0) 			return "Staubbehälter voll";
+		if (strcasecmp($error, "ui_error_dust_bin_emptied") == 0) 		return "Staubbehälter wurde geleert";
+		return $error;
+	}
 
 	public function getState() {
 		return $this->doAction("getRobotState");
@@ -180,7 +248,7 @@ class KoboldVR200 extends IPSModule {
 		public function stopCleaning() {
 			return $this->doAction("stopCleaning");
 		}
-		public function sendToBase() {
+		public function goToBase() {
 			return $this->doAction("goToBase");
 		}
 		public function enableSchedule() {
@@ -248,4 +316,4 @@ class KoboldVR200 extends IPSModule {
  // ui_error_dust_bin_full
  // ui_error_dust_bin_emptied
  // ui_alert_invalid
- //
+ //  ui_error_navigation_falling
