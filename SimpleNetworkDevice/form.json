@@ -1,0 +1,19 @@
+{
+  "elements":
+  [
+	
+	{ "type": "ValidationTextBox", "name": "IPAdresse", "caption": "IP Adresse" },
+	{ "type": "Label", "label": "Update" },
+	{ "type": "IntervalBox", "name": "Update", "caption": "ninutes" }	
+  ],
+ "actions":
+  [
+	{ "type": "Button", "label": "Update", "onClick": "SND_Update($id);" }
+  ],
+  "status":
+  [
+	{ "code": 101, "icon": "active", "caption": "Instance getting created!" },
+	{ "code": 102, "icon": "active", "caption": "Instance is active!" },
+	{ "code": 104, "icon": "inactive", "caption": "Instance is inactive!" }
+  ]
+}
