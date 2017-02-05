@@ -120,8 +120,8 @@ class KoboldVR200 extends IPSModule {
 			if (!IPS_VariableProfileExists("VR200.isCharging")) {
 				IPS_CreateVariableProfile("VR200.isCharging", 0);
 				IPS_SetVariableProfileText("VR200.isCharging", "", "");
-				IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "lädt", "", 0xFFFF00);
-				IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "entlädt", "", 0x66CC33);
+				IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "entlädt", "", 0xFFFF00);
+				IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "lädt", "", 0x66CC33);
 			 }
 	}
 
@@ -181,7 +181,7 @@ class KoboldVR200 extends IPSModule {
 			return $this->doAction("stopCleaning");
 		}
 		public function sendToBase() {
-			return $this->doAction("sendToBase");
+			return $this->doAction("goToBase");
 		}
 		public function enableSchedule() {
 			return $this->doAction("enableSchedule");
