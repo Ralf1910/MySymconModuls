@@ -94,7 +94,7 @@ class KoboldVR200 extends IPSModule {
 
 		SetValue($this->GetIDForIdent("version"), $robotState['version']);
 		SetValue($this->GetIDForIdent("reqId"), $robotState['reqId']);
-		SetValue($this->GetIDForIdent("error"), TranslateErrorMessages($robotState['error']));
+		SetValue($this->GetIDForIdent("error"), $this->TranslateErrorMessages($robotState['error']));
 		SetValue($this->GetIDForIdent("state"), $robotState['state']);
 		SetValue($this->GetIDForIdent("action"), $robotState['action']);
 		SetValue($this->GetIDForIdent("cleaningCategory"), $robotState['cleaning']['category']);
