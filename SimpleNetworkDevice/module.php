@@ -5,7 +5,7 @@
 //
 // ************************************************************
 
-class SND extends IPSModule {
+class SimpleNetworkDevice extends IPSModule {
 
 
 	public function Create() {
