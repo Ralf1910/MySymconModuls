@@ -292,8 +292,8 @@ class KoboldVR200 extends IPSModule {
 	}
 
 	// Zurück zur Ladestation
-	public function goToBase() {
-		return $this->doAction("goToBase");
+	public function sendToBase() {
+		return $this->doAction("sendToBase");
 	}
 
 	// Zeitplan aktivieren
