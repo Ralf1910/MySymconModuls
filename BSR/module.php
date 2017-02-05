@@ -27,9 +27,9 @@ class BSR extends IPSModule {
 
 		// Variablen aktualisieren
 		$this->MaintainVariable("nextBSRDate", "nächster Abholtermin BSR", 1, "~UnixTimestampDate", 10, true);
-		$this->MaintainVariable("BSRAbholungInTagen", "BSR Abholung in Tagen", 3, "", 20, true);
+		$this->MaintainVariable("BSRAbholungAnzeige", "BSR Abholung Anzeige", 3, "", 20, true);
 		$this->MaintainVariable("nextGruenerPunktDate", "nächster Abholtermin Grüner Punkt", 1, "~UnixTimestampDate", 30, true);
-		$this->MaintainVariable("GruenerPunktAbholungInTagen", "Grüner Punkt Abholung in Tagen", 3, "", 40, true);
+		$this->MaintainVariable("GruenerPunktAbholungAnzeige", "Grüner Punkt Abholung Anzeige", 3, "", 40, true);
 
 		$this->UpdateAbholtermine();
 
@@ -54,6 +54,10 @@ class BSR extends IPSModule {
 
 			if ($dateTimestampHausmuellTermin > $dateTimestampNow) {
 				SetValue($this->GetIDForIdent("nextBSRDate"), $dateTimestampHausmuellTermin);
+				SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Am ".$HausmuellTermin);
+				if (strcmp($heute, 		 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Heute");
+				if (strcmp($morgen, 	 $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Morgen");
+				if (strcmp($uebermorgen, $HausmuellTermin) == 0) 	SetValue($this->GetIDForIdent("BSRAbholungAnzeige"), "Übermorgen");
 				return;
 			}
 		}
