@@ -23,7 +23,7 @@
 	{ "type": "Button", "label": "Start Cleaning", "onClick": "VR200_startCleaning($id);" },
 	{ "type": "Button", "label": "Stop Cleaning", "onClick": "VR200_stopCleaning($id);" },
 	{ "type": "Button", "label": "Pause Cleaning", "onClick": "VR200_pauseCleaning($id);" },
-	{ "type": "Button", "label": "Send to Base", "onClick": "VR200_goToBase($id);" },
+	{ "type": "Button", "label": "Send to Base", "onClick": "VR200_sendToBase($id);" },
 	{ "type": "Button", "label": "Start Eco Cleaning", "onClick": "VR200_startEcoCleaning($id);" }
   ],
   "status":
