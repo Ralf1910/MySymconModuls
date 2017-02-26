@@ -62,6 +62,12 @@ class Stromzaehler extends IPSModule {
 		echo $counterNew."\n";
 		echo $counterOld."\n";
 
+		if ($counterNew > $counterOld)
+			SetValue($this->GetIDforIdent("energyConsumption"), getValueFloat($this->GetIDforIdent("energyConsumption")) + ($counterNew - $counterOld)/1000);
+
+		if ($counterNew < $counterOld)
+			SetValue($this->GetIDforIdent("energyConsumption"), getValueFloat($this->GetIDforIdent("energyConsumption")) + ($counterNew)/1000);
+
 		SetValue($this->GetIDForIdent("currentPower"), 	getValueFloat($this->ReadPropertyInteger("EKMCurrentObjektID")));
 		SetValue($this->GetIDForIdent("Counter"), 		getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")));
 
