@@ -26,8 +26,8 @@ class Stromzaehler extends IPSModule {
 		$this->RegisterVariableFloat("yearEnergyConsumption", "Rollierender Jahreswert", "Stromzaehler.Energy", 40);
 
 		// Updates einstellen
-		$this->RegisterTimer("UpdateStromzaehler", 5*1000, 'Stromzaehler_UpdateStromzaehler($_IPS[\'TARGET\']);');
-		$this->RegisterTimer("UpdateJahreswert", 24*60*60*1000, 'Stromzaehler_UpdateJahreswert($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateStromzaehler", 10*1000, 'Stromzaehler_UpdateStromzaehler($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateJahreswert", 60*60*1000, 'Stromzaehler_UpdateJahreswert($_IPS[\'TARGET\']);');
 	}
 
 
@@ -37,7 +37,8 @@ class Stromzaehler extends IPSModule {
 		parent::ApplyChanges();
 
 		//Timerzeit setzen in Minuten
-		$this->SetTimerInterval("UpdateStromzaehler", 5*1000);
+		$this->SetTimerInterval("UpdateStromzaehler", 10*1000);
+		$this->SetTimerInterval("UpdateJahreswert", 60*60*1000);
 
 		// Objekt IDs
 		//if(IPS_VariableExists($this->ReadPropertyInteger("CounterObjektID")))	SetValue($this->GetIDForIdent("LastCounterObjektID"), GetValue($this->ReadPropertyInteger("CounterObjektID")));
@@ -56,7 +57,7 @@ class Stromzaehler extends IPSModule {
 
 	public function UpdateStromzaehler() {
 
-		SetValue($this->GetIDforIdent("aktuelleLeistung"), 	getValueInteger($this->ReadPropertyInteger("CurrentObjektID")));
+		SetValue($this->GetIDforIdent("aktuelleLeistung"), 	getValue($this->ReadPropertyInteger("CurrentObjektID")));
 		SetValue($this->GetIDforIdent("zaehlerstand"), 		getValueFloat($this->ReadPropertyInteger("CounterObjektID")) + $this->ReadPropertyFloat("zaehleroffset"));
 
 
@@ -74,28 +75,7 @@ class Stromzaehler extends IPSModule {
 
 
 		// Daten aktualisieren
-		SetValue($this->GetIDForIdent("version"), $robotState['version']);
-		SetValue($this->GetIDForIdent("reqId"), $robotState['reqId']);
-		SetValue($this->GetIDForIdent("error"), $this->TranslateErrorMessages($robotState['error']));
-		SetValue($this->GetIDForIdent("state"), $robotState['state']);
-		SetValue($this->GetIDForIdent("action"), $robotState['action']);
-		SetValue($this->GetIDForIdent("cleaningCategory"), $robotState['cleaning']['category']);
-		SetValue($this->GetIDForIdent("cleaningMode"), $robotState['cleaning']['mode']);
-		SetValue($this->GetIDForIdent("cleaningModifier"), $robotState['cleaning']['modifier']);
-		SetValue($this->GetIDForIdent("cleaningSpotWidth"), $robotState['cleaning']['spotWidth']);
-		SetValue($this->GetIDForIdent("cleaningSpotHeight"), $robotState['cleaning']['spotHeight']);
-		SetValue($this->GetIDForIdent("detailsIsCharging"), $this->ToBoolean($robotState['details']['isCharging']));
-		SetValue($this->GetIDForIdent("detailsIsDocked"), $this->ToBoolean($robotState['details']['isDocked']));
-		SetValue($this->GetIDForIdent("detailsIsScheduleEnabled"), $this->ToBoolean($robotState['details']['isScheduleEnabled']));
-		SetValue($this->GetIDForIdent("detailsDockHasBeenSeen"), $this->ToBoolean($robotState['details']['dockHasBeenSeen']));
-		SetValue($this->GetIDForIdent("detailsCharge"), $robotState['details']['charge']);
-		SetValue($this->GetIDForIdent("metaModelName"), $robotState['meta']['modelName']);
-		SetValue($this->GetIDForIdent("metaFirmware"), $robotState['meta']['firmware']);
-		SetValue($this->GetIDForIdent("availableCommandsStart"), $this->ToBoolean($robotState['availableCommands']['start']));
-		SetValue($this->GetIDForIdent("availableCommandsStop"), $this->ToBoolean($robotState['availableCommands']['stop']));
-		SetValue($this->GetIDForIdent("availableCommandsPause"), $this->ToBoolean($robotState['availableCommands']['pause']));
-		SetValue($this->GetIDForIdent("availableCommandsResume"), $this->ToBoolean($robotState['availableCommands']['resume']));
-		SetValue($this->GetIDForIdent("availableCommandsGoToBase"), $this->ToBoolean($robotState['availableCommands']['goToBase']));
+
 	}
 
 
