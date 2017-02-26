@@ -40,11 +40,11 @@ class Stromzaehler extends IPSModule {
 		$this->SetTimerInterval("UpdateStromzaehler", 5*1000);
 
 		// Objekt IDs
-		if(IPS_VariableExists($this->ReadPropertyInteger("CounterObjektID")))	SetValue($this->GetIDForIdent("LastCounterObjektID"), GetValue($this->ReadPropertyInteger("CounterObjektID")));
-		if(IPS_VariableExists($this->ReadPropertyInteger("CurrentObjektID")))	SetValue($this->GetIDForIdent("LastCurrentObjektID"), GetValue($this->ReadPropertyInteger("CurrentObjektID")));
+		//if(IPS_VariableExists($this->ReadPropertyInteger("CounterObjektID")))	SetValue($this->GetIDForIdent("LastCounterObjektID"), GetValue($this->ReadPropertyInteger("CounterObjektID")));
+		//if(IPS_VariableExists($this->ReadPropertyInteger("CurrentObjektID")))	SetValue($this->GetIDForIdent("LastCurrentObjektID"), GetValue($this->ReadPropertyInteger("CurrentObjektID")));
 
 		//Always hide Lastvariable
-		IPS_SetHidden($this->GetIDForIdent("LastCounterObjektID"), true);
+		//IPS_SetHidden($this->GetIDForIdent("LastCounterObjektID"), true);
 
 		// Variablenprofile anlegen
 		$this->CreateVarProfileStromzaehlerEnergy();
