@@ -1,7 +1,7 @@
 {
   "elements":
   [
-	{ "type": "SelectVariable", "name": "CounterObjektID", "caption": "Counter" },
+	{ "type": "SelectVariable", "name": "CounterObjektID", "caption": "Counter Persistent" },
 	{ "type": "SelectVariable", "name": "CurrentObjektID", "caption": "Current" },
 	{ "type": "ValidationTextBox", "name": "Zaehleroffset", "caption": "Zähler Offset" }
 	

@@ -53,36 +53,20 @@ class Stromzaehler extends IPSModule {
 		SetValue($this->GetIDforIdent("aktuelleLeistung"), 	getValue($this->ReadPropertyInteger("CurrentObjektID")));
 		SetValue($this->GetIDforIdent("zaehlerstand"), 		(getValue($this->ReadPropertyInteger("CounterObjektID"))/1000) + $this->ReadPropertyInteger("Zaehleroffset"));
 
-
-
-	// $ret = SetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/  , Round(GetValue(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/)*1.00/1000 + 133437 /* 14.11.2015 */,4));
- 	// if ($ret == false) { echo "Fehler beim setzen des Haushalt Energieverbrauchs"; }
-
- 	// $ret = SetValueFloat(24149 /*[Werte & Stati\Strom\Haushalt\aktuelle Leistung]*/ , Round(GetValue (53144 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Current]*/ )));
-	// if ($ret == false) { echo "Fehler beim setzen der aktuellen Haushaltsleistung"; }
-
- 	//	$historischeWerte = AC_GetLoggedValues(27366 /*[Archiv]*/ , 50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/ , strtotime('today midnight') - 50000, strtotime('today midnight'), 1);
- 	//	foreach($historischeWerte as $wertZumTagesbeginn) {
-	//			SetValueFloat(13989 /*[Werte & Stati\Strom\Haushalt\Heute Verbraucht]*/, GetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/) - $wertZumTagesbeginn['Value']);
-	//	}
-
-
-		// Daten aktualisieren
-
 	}
 
+	public function UpdateJahreswert() {
+
+			$archivID = IPS_GetVariableIDByName("Archiv", 0);
+			$historischeWerte = AC_GetLoggedValues($archivID, $this->ReadPropertyInteger("CounterObjektID"), strtotime('today midnight') - 50000, strtotime('today midnight'), 1);
+	 	    foreach($historischeWerte as $wertZumTagesbeginn) {
+		    	SetValueFloat($this->ReadPropertyInteger("heutigerVerbrauch"), $this->ReadPropertyInteger("CounterObjektID") - $wertZumTagesbeginn['Value']);
+		    }
+
+		}
 
 
-	// Variablenprofile erstellen
-	private function CreateVarProfile($name, $ProfileType, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits, $Icon) {
-		if (!IPS_VariableProfileExists($name)) {
-			IPS_CreateVariableProfile($name, $ProfileType);
-			IPS_SetVariableProfileText($name, "", $Suffix);
-			IPS_SetVariableProfileValues($name, $MinValue, $MaxValue, $StepSize);
-			IPS_SetVariableProfileDigits($name, $Digits);
-			IPS_SetVariableProfileIcon($name, $Icon);
-		 }
-	}
+
 
 	//Variablenprofil für den Action erstellen
 	private function CreateVarProfileStromzaehlerEnergy() {
