@@ -13,7 +13,7 @@ class Stromzaehler extends IPSModule {
 		parent::Create();
 		$this->RegisterPropertyInteger("CounterObjektID", 0);
 		$this->RegisterPropertyInteger("CurrentObjektID", 0);
-		$this->RegisterPropertyFloat("Zaehleroffset", 0);
+		$this->RegisterPropertyInteger("Zaehleroffset", 0);
 
 		// Variablenprofile anlegen
 		$this->CreateVarProfileStromzaehlerEnergy();
@@ -40,13 +40,6 @@ class Stromzaehler extends IPSModule {
 		$this->SetTimerInterval("UpdateStromzaehler", 10*1000);
 		$this->SetTimerInterval("UpdateJahreswert", 60*60*1000);
 
-		// Objekt IDs
-		//if(IPS_VariableExists($this->ReadPropertyInteger("CounterObjektID")))	SetValue($this->GetIDForIdent("LastCounterObjektID"), GetValue($this->ReadPropertyInteger("CounterObjektID")));
-		//if(IPS_VariableExists($this->ReadPropertyInteger("CurrentObjektID")))	SetValue($this->GetIDForIdent("LastCurrentObjektID"), GetValue($this->ReadPropertyInteger("CurrentObjektID")));
-
-		//Always hide Lastvariable
-		//IPS_SetHidden($this->GetIDForIdent("LastCounterObjektID"), true);
-
 		// Variablenprofile anlegen
 		$this->CreateVarProfileStromzaehlerEnergy();
 		$this->CreateVarProfileStromzaehlerPower();
@@ -58,7 +51,7 @@ class Stromzaehler extends IPSModule {
 	public function UpdateStromzaehler() {
 
 		SetValue($this->GetIDforIdent("aktuelleLeistung"), 	getValue($this->ReadPropertyInteger("CurrentObjektID")));
-		SetValue($this->GetIDforIdent("zaehlerstand"), 		getValue($this->ReadPropertyInteger("CounterObjektID"))/1000 + $this->ReadPropertyFloat("zaehleroffset"));
+		SetValue($this->GetIDforIdent("zaehlerstand"), 		getValue($this->ReadPropertyInteger("CounterObjektID"))/1000 + $this->ReadPropertyInteger("zaehleroffset"));
 
 
 
