@@ -135,6 +135,7 @@ class Stromzaehler extends IPSModule {
 		if (!IPS_VariableProfileExists("Stromzaehler.Energy")) {
 			IPS_CreateVariableProfile("Stromzaehler.Energy", 2);
 			IPS_SetVariableProfileText("Stromzaehler.Energy", "", " kWh");
+			IPS_SetVariableProfileDigits("Stromzaehler.Energy", 2);
 		 }
 	}
 
@@ -153,116 +154,6 @@ class Stromzaehler extends IPSModule {
 
 
 
-	// Integer Rückgabewerte in Boolean umwandeln
-	private function ToBoolean($value) {
-		if ($value == 1)
-			return true;
-		else
-			return false;
-	}
-
-	// Roboter Status holen
-	public function getState() {
-		return $this->doAction("getRobotState");
-	}
-
-	// Reinigung im Normal Modus starten (muss in der Regel zwischendurch einmal geladen werden
-	public function startCleaning() {
-		$params = array("category" => 2, "mode" => 2, "modifier" => 2);
-		SetValue($this->GetIDForIdent("lastCleaning"), time());
-		return $this->doAction("startCleaning", $params);
-	}
-
-	// Reinigung im Eco Modus starten
-	public function startEcoCleaning() {
-		$params = array("category" => 2, "mode" => 1, "modifier" => 2);
-		SetValue($this->GetIDForIdent("lastCleaning"), time());
-		return $this->doAction("startCleaning", $params);
-	}
-
-	// Reinigung pausieren
-	public function pauseCleaning() {
-		return $this->doAction("pauseCleaning");
-	}
-
-	// Reinigung fortsetzen
-	public function resumeCleaning() {
-		return $this->doAction("resumeCleaning");
-	}
-
-	// Reinigung stoppen
-	public function stopCleaning() {
-		return $this->doAction("stopCleaning");
-	}
-
-	// Zurück zur Ladestation
-	public function sendToBase() {
-		return $this->doAction("sendToBase");
-	}
-
-	// Zeitplan aktivieren
-	public function enableSchedule() {
-		return $this->doAction("enableSchedule");
-	}
-
-	// Zeitplan deaktivieren
-	public function disableSchedule() {
-		return $this->doAction("disableSchedule");
-	}
-
-	// Zeitplan ermitteln
-	public function getSchedule() {
-		return $this->doAction("getSchedule");
-	}
-
-	// Action ausführen
-	protected function doAction($command, $params = false) {
-		$result = array("message" => "no serial or secret");
-		if($this->ReadPropertyString("SerialNumber") !== false && $this->ReadPropertyString("SecretKey") !== false) {
-			$payload = array("reqId" => "1", "cmd" => $command);
-			if($params !== false) {
-				$payload["params"] = $params;
-			}
-			$payload = json_encode($payload);
-			$date = gmdate("D, d M Y H:i:s")." GMT";
-			$data = implode("\n", array(strtolower($this->ReadPropertyString("SerialNumber")), $date, $payload));
-			$hmac = hash_hmac("sha256", $data, $this->ReadPropertyString("SecretKey"));
-			$headers = array(
-	    	"Date: ".$date,
-	    	"Authorization: NEATOAPP ".$hmac
-			);
-			$result = $this->requestKobold($this->ReadPropertyString("BaseURL").$this->ReadPropertyString("SerialNumber")."/messages", $payload, "POST", $headers);
-		}
-		return $result;
-	}
-	/*
-		* VR200 Api.
-		* Helper class to make requests against Kobold API
-		*
-		* PHP port based on https://github.com/kangguru/botvac
-		*
-		* Author: Tom Rosenback tom.rosenback@gmail.com  2016
-		*/
-	private static function requestKobold($url, $payload = array(), $method = "POST", $headers = array()) {
-			$ch = curl_init($url);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-			if($method == "POST") {
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-			}
-			$requestHeaders = array(
-				'Accept: application/vnd.neato.nucleo.v1'
-			);
-			if(count($headers) > 0) {
-				$requestHeaders = array_merge($requestHeaders, $headers);
-			}
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
-			$result = curl_exec($ch);
-			curl_close($ch);
-			return json_decode($result, true);
-	}
 
 
  }
