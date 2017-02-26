@@ -25,7 +25,7 @@ class Stromzaehler extends IPSModule {
 		$OffsetObjektID = $this->RegisterVariableInteger("Offset", "Counter Offset");
 
 		// Updates einstellen
-		$this->RegisterTimer("UpdateStromzaehler", $this->ReadPropertyInteger("UpdateStromzaehler")*60*1000, 'Stromzaehler_UpdateStromzaehler($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateStromzaehler", 60*1000, 'Stromzaehler_UpdateStromzaehler($_IPS[\'TARGET\']);');
 	}
 
 
