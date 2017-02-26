@@ -11,21 +11,23 @@ class Stromzaehler extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
-		$this->RegisterPropertyInteger("EKMCounterObjektID", 0);
-		$this->RegisterPropertyInteger("EKMCurrentObjektID", 0);
-		$this->RegisterPropertyInteger("Zaehlerstand", 0);
-		$this->RegisterPropertyInteger("Counter", 0);
-		$this->RegisterPropertyInteger("Korrekturwert", 0);
+		$this->RegisterPropertyInteger("CounterObjektID", 0);
+		$this->RegisterPropertyInteger("CurrentObjektID", 0);
+		$this->RegisterPropertyFloat("Zaehleroffset", 0);
 
 		// Variablenprofile anlegen
 		$this->CreateVarProfileStromzaehlerEnergy();
 		$this->CreateVarProfileStromzaehlerPower();
 
-		// Interne Variablen initialisieren
-		SetValue($this->GetIDForIdent("Counter"), 		getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")));
+		// Variablen anlegen
+		$this->RegisterVariableFloat("aktuelleLeistung", "aktuelle Leistung", "Stromzaehler.Power", 10);
+		$this->RegisterVariableFloat("zaehlerstand", "Zählerstand", "Stromzaehler.Energy", 20);
+		$this->RegisterVariableFloat("heutigerVerbrauch", "Heutiger Verbrauch", "Stromzaehler.Energy", 30);
+		$this->RegisterVariableFloat("yearEnergyConsumption", "Rollierender Jahreswert", "Stromzaehler.Energy", 40);
 
 		// Updates einstellen
 		$this->RegisterTimer("UpdateStromzaehler", 5*1000, 'Stromzaehler_UpdateStromzaehler($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("UpdateJahreswert", 24*60*60*1000, 'Stromzaehler_UpdateJahreswert($_IPS[\'TARGET\']);');
 	}
 
 
@@ -37,18 +39,16 @@ class Stromzaehler extends IPSModule {
 		//Timerzeit setzen in Minuten
 		$this->SetTimerInterval("UpdateStromzaehler", 5*1000);
 
+		// Objekt IDs
+		if(IPS_VariableExists($this->ReadPropertyInteger("CounterObjektID")))	SetValue($this->GetIDForIdent("LastCounterObjektID"), GetValue($this->ReadPropertyInteger("CounterObjektID")));
+		if(IPS_VariableExists($this->ReadPropertyInteger("CurrentObjektID")))	SetValue($this->GetIDForIdent("LastCurrentObjektID"), GetValue($this->ReadPropertyInteger("CurrentObjektID")));
+
+		//Always hide Lastvariable
+		IPS_SetHidden($this->GetIDForIdent("LastCounterObjektID"), true);
+
 		// Variablenprofile anlegen
 		$this->CreateVarProfileStromzaehlerEnergy();
 		$this->CreateVarProfileStromzaehlerPower();
-
-		// Variablen aktualisieren
-		$this->MaintainVariable("currentPower", "aktuelle Leistung", 2, "Stromzaehler.Power", 10, true);
-		$this->MaintainVariable("energyConsumption", "Zählerstand", 2, "Stromzaehler.Energy", 20, true);
-		$this->MaintainVariable("todayEnergyConsumption", "Heutige kWh", 2, "Stromzaehler.Energy", 30, true);
-		$this->MaintainVariable("yearEnergyConsumption", "Rollierender Jahreswert", 2, "Stromzaehler.Energy", 40, true);
-
-		//Instanz ist aktiv
-		$this->SetStatus(102);
 
 	}
 
@@ -56,29 +56,10 @@ class Stromzaehler extends IPSModule {
 
 	public function UpdateStromzaehler() {
 
-		$counterNew = getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID"));
-		$counterOld	= getValueInteger($this->GetIDForIdent("Counter"));
-
-		echo $counterNew."\n";
-		echo $counterOld."\n";
-
-		if ($counterNew > $counterOld)
-			SetValue($this->GetIDforIdent("energyConsumption"), getValueFloat($this->GetIDforIdent("energyConsumption")) + ($counterNew - $counterOld)/1000);
-
-		if ($counterNew < $counterOld)
-			SetValue($this->GetIDforIdent("energyConsumption"), getValueFloat($this->GetIDforIdent("energyConsumption")) + ($counterNew)/1000);
-
-		SetValue($this->GetIDForIdent("currentPower"), 	getValueFloat($this->ReadPropertyInteger("EKMCurrentObjektID")));
-		SetValue($this->GetIDForIdent("Counter"), 		getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")));
+		SetValue($this->GetIDforIdent("aktuelleLeistung"), 	getValueInteger($this->ReadPropertyInteger("CurrentObjektID")));
+		SetValue($this->GetIDforIdent("zaehlerstand"), 		getValueFloat($this->ReadPropertyInteger("CounterObjektID")) + $this->ReadPropertyFloat("zaehleroffset"));
 
 
-
-		//if ((GetValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")) + GetValueInteger($OffsetObjektID))>= GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/ )) {
- 		//	SetValueInteger (28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
- 		//} else {
- 		//	SetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/, GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/));
-		//	SetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
- 		//}
 
 	// $ret = SetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/  , Round(GetValue(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/)*1.00/1000 + 133437 /* 14.11.2015 */,4));
  	// if ($ret == false) { echo "Fehler beim setzen des Haushalt Energieverbrauchs"; }

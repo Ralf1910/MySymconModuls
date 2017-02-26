@@ -1,21 +1,9 @@
 {
   "elements":
   [
-	{ "type": "ValidationTextBox", "name": "EKMCounterObjektID", "caption": "EKM Counter (ID)" },
-	{ "type": "ValidationTextBox", "name": "EKMCurrentObjektID", "caption": "EKM Current (ID)" },
-	{ "type": "ValidationTextBox", "name": "Zaehlerstand", "caption": "Zaehlerstand" },
-	{ "type": "ValidationTextBox", "name": "CounterOffset", "caption": "Wert des Counter Offsets" },
-	{ "type": "ValidationTextBox", "name": "Korrekturwert", "caption": "Korrektur" }
+	{ "type": "SourceVariable", "name": "EKMCounter", "caption": "EKM Counter" },
+	{ "type": "SourceVariable", "name": "EKMCurrent", "caption": "EKM Current" },
+	{ "type": "ValidationTextBox", "name": "Zaehleroffset", "caption": "Zähler Offset" }
 	
-  ],
- "actions":
-  [
-	
-  ],
-  "status":
-  [
-	{ "code": 101, "icon": "active", "caption": "Instance getting created!" },
-	{ "code": 102, "icon": "active", "caption": "Instance is active!" },
-	{ "code": 104, "icon": "inactive", "caption": "Instance is inactive!" }
   ]
 }
