@@ -1,0 +1,13 @@
+{
+"id": "{6D4E24BE-E2D5-4478-9EFC-74C0A1278B1B}",
+  "name": "Stromzaehler",
+  "type": 3,
+  "vendor": "",
+  "aliases": [
+    "Virtueller Stromzähler"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "Power"
+}

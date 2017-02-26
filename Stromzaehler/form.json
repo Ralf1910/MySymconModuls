@@ -1,0 +1,36 @@
+{
+  "elements":
+  [
+	{ "type": "ValidationTextBox", "name": "BaseURL", "caption": "URL for Kobold communication." },
+	{ "type": "ValidationTextBox", "name": "SerialNumber", "caption": "serialnumber" },
+	{ "type": "ValidationTextBox", "name": "SecretKey", "caption": "secret key" },
+	{ "type": "Label", "label": "Update Kobold data every X minutes." },
+	{ "type": "IntervalBox", "name": "UpdateKobold", "caption": "minutes" },
+	{ "type": "Label", "label": "Clean every X Days during the following Season:" },
+	{ "type": "Label", "label": "Winter (Dezember - February)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalWinter", "caption": "days" },
+	{ "type": "Label", "label": "Spring (March - May)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalSpring", "caption": "days" },
+	{ "type": "Label", "label": "Summer (June - August)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalSummer", "caption": "days" },
+	{ "type": "Label", "label": "Autum (September - November)" },
+	{ "type": "IntervalBox", "name": "CleaningIntervalAutum", "caption": "days" }
+	
+  ],
+ "actions":
+  [
+	{ "type": "Button", "label": "Update Kobold Data", "onClick": "VR200_UpdateKoboldData($id);" },
+	{ "type": "Button", "label": "Start Cleaning", "onClick": "VR200_startCleaning($id);" },
+	{ "type": "Button", "label": "Stop Cleaning", "onClick": "VR200_stopCleaning($id);" },
+	{ "type": "Button", "label": "Pause Cleaning", "onClick": "VR200_pauseCleaning($id);" },
+	{ "type": "Button", "label": "Resume Cleaning", "onClick": "VR200_resumeCleaning($id);" },
+	{ "type": "Button", "label": "Send to Base", "onClick": "VR200_sendToBase($id);" },
+	{ "type": "Button", "label": "Start Eco Cleaning", "onClick": "VR200_startEcoCleaning($id);" }
+  ],
+  "status":
+  [
+	{ "code": 101, "icon": "active", "caption": "Instance getting created!" },
+	{ "code": 102, "icon": "active", "caption": "Instance is active!" },
+	{ "code": 104, "icon": "inactive", "caption": "Instance is inactive!" }
+  ]
+}
