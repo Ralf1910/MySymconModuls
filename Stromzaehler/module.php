@@ -55,6 +55,9 @@ class Stromzaehler extends IPSModule {
 
 
 	public function UpdateStromzaehler() {
+
+		SetValue($this->GetIDForIdent("currentPower"), getValueFloat($this->ReadPropertyInteger("EKMCurrentObjektID"));
+
 		if ((GetValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")) + GetValueInteger($OffsetObjektID))>= GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/ )) {
  			SetValueInteger (28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
  		} else {
