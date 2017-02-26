@@ -42,10 +42,10 @@ class Stromzaehler extends IPSModule {
 		$this->CreateVarProfileStromzaehlerPower();
 
 		// Variablen aktualisieren
-		$this->MaintainVariable("currentPower", "aktuelle Leistung", 2, "", 10, true);
-		$this->MaintainVariable("energyConsumption", "Zählerstand", 2, "", 20, true);
-		$this->MaintainVariable("todayEnergyConsumption", "Heutige kWh", 2, "", 30, true);
-		$this->MaintainVariable("yearEnergyConsumption", "Rollierender Jahreswert", 2, "", 40, true);
+		$this->MaintainVariable("currentPower", "aktuelle Leistung", 2, "Stromzaehler.Power", 10, true);
+		$this->MaintainVariable("energyConsumption", "Zählerstand", 2, "Stromzaehler.Energy", 20, true);
+		$this->MaintainVariable("todayEnergyConsumption", "Heutige kWh", 2, "Stromzaehler.Energy", 30, true);
+		$this->MaintainVariable("yearEnergyConsumption", "Rollierender Jahreswert", 2, "Stromzaehler.Energy", 40, true);
 
 		//Instanz ist aktiv
 		$this->SetStatus(102);
