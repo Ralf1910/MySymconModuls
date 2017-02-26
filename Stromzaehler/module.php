@@ -56,14 +56,14 @@ class Stromzaehler extends IPSModule {
 
 	public function UpdateStromzaehler() {
 
-		$counterNew = getValueFloat($this->ReadPropertyInteger("EKMCounterObjektID"));
-		$counterOld	= getValueFloat($this->GetIDForIdent("Counter"));
+		$counterNew = getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID"));
+		$counterOld	= getValueInteger($this->GetIDForIdent("Counter"));
 
 		echo $counterNew."\n";
 		echo $counterOld."\n";
 
 		SetValue($this->GetIDForIdent("currentPower"), 	getValueFloat($this->ReadPropertyInteger("EKMCurrentObjektID")));
-		SetValue($this->GetIDForIdent("Counter"), 		getValueFloat($this->ReadPropertyInteger("EKMCounterObjektID")));
+		SetValue($this->GetIDForIdent("Counter"), 		getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")));
 
 
 
