@@ -51,7 +51,7 @@ class Stromzaehler extends IPSModule {
 	public function UpdateStromzaehler() {
 
 		SetValue($this->GetIDforIdent("aktuelleLeistung"), 	getValue($this->ReadPropertyInteger("CurrentObjektID")));
-		SetValue($this->GetIDforIdent("zaehlerstand"), 		getValue($this->ReadPropertyInteger("CounterObjektID"))/1000 + $this->ReadPropertyInteger("zaehleroffset"));
+		SetValue($this->GetIDforIdent("zaehlerstand"), 		(getValue($this->ReadPropertyInteger("CounterObjektID"))/1000) + $this->ReadPropertyInteger("zaehleroffset"));
 
 
 
