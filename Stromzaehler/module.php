@@ -11,10 +11,10 @@ class Stromzaehler extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
-		$this->RegisterPropertyInteger("EKM-Counter ObjektID", 1);
-		$this->RegisterPropertyInteger("EKM-Current ObjektID", 2);
-		$this->RegisterPropertyInteger("Persistenter Counter", 1);
-		$this->RegisterPropertyInteger("Counter Offset", 1);
+		$this->RegisterPropertyInteger("EKMCounterObjektID", 1);
+		$this->RegisterPropertyInteger("EKMCurrentObjektID", 2);
+		$this->RegisterPropertyInteger("PersistenterCounter", 1);
+		$this->RegisterPropertyInteger("CounterOffset", 1);
 		$this->RegisterPropertyInteger("Korrekturwert", 1);
 
 		// Variablenprofile anlegen
@@ -35,7 +35,7 @@ class Stromzaehler extends IPSModule {
 		parent::ApplyChanges();
 
 		//Timerzeit setzen in Minuten
-		$this->SetTimerInterval("UpdateStromzaehler", $this->ReadPropertyInteger("UpdateStromzaehler")*60*1000);
+		$this->SetTimerInterval("UpdateStromzaehler", 60*1000);
 
 		// Variablenprofile anlegen
 		$this->CreateVarProfileNRGEnergy();
@@ -56,22 +56,22 @@ class Stromzaehler extends IPSModule {
 
 	public function UpdateStromzaehler() {
 		if ((GetValueInteger($this->ReadPropertyInteger("EKM-Counter ObjektID")) + GetValueInteger($OffsetObjektID))>= GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/ )) {
- 	SetValueInteger (28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
- } else {
- 	SetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/, GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/));
-	SetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
- }
+ 			SetValueInteger (28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
+ 		} else {
+ 			SetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/, GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/));
+			SetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
+ 		}
 
- $ret = SetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/  , Round(GetValue(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/)*1.00/1000 + 133437 /* 14.11.2015 */,4));
- if ($ret == false) { echo "Fehler beim setzen des Haushalt Energieverbrauchs"; }
+	$ret = SetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/  , Round(GetValue(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/)*1.00/1000 + 133437 /* 14.11.2015 */,4));
+ 	if ($ret == false) { echo "Fehler beim setzen des Haushalt Energieverbrauchs"; }
 
- $ret = SetValueFloat(24149 /*[Werte & Stati\Strom\Haushalt\aktuelle Leistung]*/ , Round(GetValue (53144 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Current]*/ )));
- if ($ret == false) { echo "Fehler beim setzen der aktuellen Haushaltsleistung"; }
+ 	$ret = SetValueFloat(24149 /*[Werte & Stati\Strom\Haushalt\aktuelle Leistung]*/ , Round(GetValue (53144 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Current]*/ )));
+	 if ($ret == false) { echo "Fehler beim setzen der aktuellen Haushaltsleistung"; }
 
- $historischeWerte = AC_GetLoggedValues(27366 /*[Archiv]*/ , 50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/ , strtotime('today midnight') - 50000, strtotime('today midnight'), 1);
- foreach($historischeWerte as $wertZumTagesbeginn) {
-		SetValueFloat(13989 /*[Werte & Stati\Strom\Haushalt\Heute Verbraucht]*/, GetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/) - $wertZumTagesbeginn['Value']);
-	}
+ 		$historischeWerte = AC_GetLoggedValues(27366 /*[Archiv]*/ , 50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/ , strtotime('today midnight') - 50000, strtotime('today midnight'), 1);
+ 		foreach($historischeWerte as $wertZumTagesbeginn) {
+				SetValueFloat(13989 /*[Werte & Stati\Strom\Haushalt\Heute Verbraucht]*/, GetValueFloat(50657 /*[Werte & Stati\Strom\Haushalt\Verbrauchszähler]*/) - $wertZumTagesbeginn['Value']);
+		}
 
 
 		// Daten aktualisieren
