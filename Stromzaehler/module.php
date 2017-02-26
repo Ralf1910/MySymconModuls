@@ -113,7 +113,7 @@ class Stromzaehler extends IPSModule {
 	}
 
 	//Variablenprofil für den Action erstellen
-	private function CreateVarProfileNRGEnergy() {
+	private function CreateVarProfileStromzaehlerEnergy() {
 		if (!IPS_VariableProfileExists("Stromzaehler.Energy")) {
 			IPS_CreateVariableProfile("Stromzaehler.Energy", 2);
 			IPS_SetVariableProfileText("Stromzaehler.Energy", "", " kWh");
@@ -121,106 +121,19 @@ class Stromzaehler extends IPSModule {
 	}
 
 	//Variablenprofil für die Battery erstellen
-	private function CreateVarProfileVR200IsCharging() {
-		if (!IPS_VariableProfileExists("VR200.isCharging")) {
-			IPS_CreateVariableProfile("VR200.isCharging", 0);
-			IPS_SetVariableProfileText("VR200.isCharging", "", "");
-			IPS_SetVariableProfileAssociation("VR200.isCharging", 0, "entlädt", "", 0xFF0000);
-			IPS_SetVariableProfileAssociation("VR200.isCharging", 1, "lädt", "", 0x00FF00);
-		 }
-	}
-
-	//Variablenprofil für die Battery erstellen
-	private function CreateVarProfileVR200Charge() {
-		if (!IPS_VariableProfileExists("VR200.Charge")) {
-			IPS_CreateVariableProfile("VR200.Charge", 1);
-			IPS_SetVariableProfileValues("VR200.Charge", 0, 100, 1);
-			IPS_SetVariableProfileText("VR200.Charge", "", " %");
-		 }
-	}
-
-	//Variablenprofil für den Status erstellen
-	private function CreateVarProfileVR200State() {
-		if (!IPS_VariableProfileExists("VR200.State")) {
-			IPS_CreateVariableProfile("VR200.State", 1);
-			IPS_SetVariableProfileText("VR200.State", "", "");
-			IPS_SetVariableProfileAssociation("VR200.State", 1, "angehalten", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.State", 2, "unterwegs", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.State", 3, "pausiert", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.State", 4, "Weg blockiert", "", 0xFFFF00);
-		 }
-	}
-
-    // Variablenprofil für den Reinigungmodus
-	private function CreateVarProfileVR200Mode() {
-		if (!IPS_VariableProfileExists("VR200.Mode")) {
-			IPS_CreateVariableProfile("VR200.Mode", 1);
-			IPS_SetVariableProfileText("VR200.Mode", "", "");
-			IPS_SetVariableProfileAssociation("VR200.Mode", 1, "normal", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.Mode", 2, "eco", "", 0xFFFF00);
-		 }
-	}
-
-	// Variablenprofil für den Categroy
-	private function CreateVarProfileVR200Category() {
-		if (!IPS_VariableProfileExists("VR200.Category")) {
-			IPS_CreateVariableProfile("VR200.Category", 1);
-			IPS_SetVariableProfileText("VR200.Category", "", "");
-			IPS_SetVariableProfileAssociation("VR200.Category", 1, "1 - ???", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.Category", 2, "2 - ???", "", 0xFFFF00);
-		 }
-	}
-
-	 // Variablenprofil für den Dockingmodus erstellen
-	private function CreateVarProfileVR200isDocked() {
-		if (!IPS_VariableProfileExists("VR200.isDocked")) {
-			IPS_CreateVariableProfile("VR200.isDocked", 0);
-			IPS_SetVariableProfileText("VR200.isDocked", "", "");
-			IPS_SetVariableProfileAssociation("VR200.isDocked", 0, "unterwegs", "", 0xFFFF00);
-			IPS_SetVariableProfileAssociation("VR200.isDocked", 1, "in der Dockingstation", "", 0xFFFF00);
-		 }
-	}
-
-	// Variablenprofil für den Zeitplan
-	private function CreateVarProfileVR200isScheduleEnabled() {
-		if (!IPS_VariableProfileExists("VR200.isScheduleEnabled")) {
-			IPS_CreateVariableProfile("VR200.isScheduleEnabled", 0);
-			IPS_SetVariableProfileText("VR200.isScheduleEnabled", "", "");
-			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 0, "Zeitplan deaktiviert", "", 0xFF0000);
-			IPS_SetVariableProfileAssociation("VR200.isScheduleEnabled", 1, "Zeitplan aktiviert", "", 0x00FF00);
-		 }
-	}
-
-	// Variablenprofil für die Sichtung der Dockingstation
-	private function CreateVarProfileVR200dockHasBeenSeen() {
-		if (!IPS_VariableProfileExists("VR200.dockHasBeenSeen")) {
-			IPS_CreateVariableProfile("VR200.dockHasBeenSeen", 0);
-			IPS_SetVariableProfileText("VR200.dockHasBeenSeen", "", "");
-			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 0, "Dockingstation außer Sichtweite", "", 0xFF0000);
-			IPS_SetVariableProfileAssociation("VR200.dockHasBeenSeen", 1, "Dockingstation in Sichtweite", "", 0x00FF00);
-		 }
-	}
-
-	//Variablenprofil für die Befehle
-		private function CreateVarProfileVR200Commands() {
-			if (!IPS_VariableProfileExists("VR200.Commands")) {
-				IPS_CreateVariableProfile("VR200.Commands", 0);
-				IPS_SetVariableProfileText("VR200.Commands", "", "");
-				IPS_SetVariableProfileAssociation("VR200.Commands", 0, "Befehl nicht verfügbar", "", 0xFF0000);
-				IPS_SetVariableProfileAssociation("VR200.Commands", 1, "Befehl verfügbar", "", 0x00FF00);
+	private function CreateVarProfileStromzaehlerPower() {
+			if (!IPS_VariableProfileExists("Stromzaehler.Power")) {
+				IPS_CreateVariableProfile("Stromzaehler.Power", 1);
+				IPS_SetVariableProfileText("Stromzaehler.Power", "", " W");
 			 }
 	}
 
-	// Fehlermeldungen des VR200 in Klartext übersetzen
-	private function TranslateErrorMessages($error) {
-		if (strcasecmp($error, "ui_error_navigation_falling") == 0) 	return "Weg bitte freiräumen";
-		if (strcasecmp($error, "ui_alert_invalid") == 0) 				return "Alles OK";
-		if (strcasecmp($error, "ui_error_dust_bin_full") == 0) 			return "Staubbehälter voll";
-		if (strcasecmp($error, "ui_error_dust_bin_emptied") == 0) 		return "Staubbehälter wurde geleert";
-		if (strcasecmp($error, "ui_error_picked_up") == 0) 				return "Kobold VR200 bitte absetzen";
-		if (strcasecmp($error, "ui_error_brush_stuck") == 0) 			return "Bürste blockiert";
-		return $error;
-	}
+
+
+
+
+
+
 
 	// Integer Rückgabewerte in Boolean umwandeln
 	private function ToBoolean($value) {
