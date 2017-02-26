@@ -11,11 +11,11 @@ class Stromzaehler extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
-		$this->RegisterPropertyInteger("EKMCounterObjektID", 1);
-		$this->RegisterPropertyInteger("EKMCurrentObjektID", 2);
-		$this->RegisterPropertyInteger("PersistenterCounter", 1);
-		$this->RegisterPropertyInteger("CounterOffset", 1);
-		$this->RegisterPropertyInteger("Korrekturwert", 1);
+		$this->RegisterPropertyInteger("EKMCounterObjektID", 0);
+		$this->RegisterPropertyInteger("EKMCurrentObjektID", 0);
+		$this->RegisterPropertyInteger("Zaehlerstand", 0);
+		$this->RegisterPropertyInteger("Counter", 0);
+		$this->RegisterPropertyInteger("Korrekturwert", 0);
 
 		// Variablenprofile anlegen
 		$this->CreateVarProfileStromzaehlerEnergy();
