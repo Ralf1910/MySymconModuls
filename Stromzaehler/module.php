@@ -21,8 +21,8 @@ class Stromzaehler extends IPSModule {
 		$this->CreateVarProfileStromzaehlerEnergy();
 		$this->CreateVarProfileStromzaehlerPower();
 
-		// Interne Variablen anlegen
-		$OffsetObjektID = $this->RegisterVariableInteger("Counter", "Counter");
+		// Interne Variablen initialisieren
+		SetValue($this->GetIDForIdent("Counter"), 		getValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")));
 
 		// Updates einstellen
 		$this->RegisterTimer("UpdateStromzaehler", 5*1000, 'Stromzaehler_UpdateStromzaehler($_IPS[\'TARGET\']);');

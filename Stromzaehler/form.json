@@ -3,7 +3,7 @@
   [
 	{ "type": "ValidationTextBox", "name": "EKMCounterObjektID", "caption": "EKM Counter (ID)" },
 	{ "type": "ValidationTextBox", "name": "EKMCurrentObjektID", "caption": "EKM Current (ID)" },
-	{ "type": "ValidationTextBox", "name": "PersistentCounter", "caption": "Wert des Persistent Counters" },
+	{ "type": "ValidationTextBox", "name": "Zaehlerstand", "caption": "Zaehlerstand" },
 	{ "type": "ValidationTextBox", "name": "CounterOffset", "caption": "Wert des Counter Offsets" },
 	{ "type": "ValidationTextBox", "name": "Korrekturwert", "caption": "Korrektur" }
 	
