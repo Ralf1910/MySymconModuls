@@ -38,8 +38,8 @@ class Stromzaehler extends IPSModule {
 		$this->SetTimerInterval("UpdateStromzaehler", 60*1000);
 
 		// Variablenprofile anlegen
-		$this->CreateVarProfileNRGEnergy();
-		$this->CreateVarProfileNRGPower();
+		$this->CreateVarProfileStromzaehlerEnergy();
+		$this->CreateVarProfileStromzaehlerPower();
 
 		// Variablen aktualisieren
 		$this->MaintainVariable("currentPower", "aktuelle Leistung", 2, "", 10, true);
@@ -55,7 +55,7 @@ class Stromzaehler extends IPSModule {
 
 
 	public function UpdateStromzaehler() {
-		if ((GetValueInteger($this->ReadPropertyInteger("EKM-Counter ObjektID")) + GetValueInteger($OffsetObjektID))>= GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/ )) {
+		if ((GetValueInteger($this->ReadPropertyInteger("EKMCounterObjektID")) + GetValueInteger($OffsetObjektID))>= GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/ )) {
  			SetValueInteger (28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/, GetValueInteger(49624 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter]*/) + GetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/));
  		} else {
  			SetValueInteger(38863 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Offset]*/, GetValueInteger(28348 /*[Geräte\KG\Waschkeller\EKM-868 128:1 (Haushalt)\Counter Persistent]*/));
