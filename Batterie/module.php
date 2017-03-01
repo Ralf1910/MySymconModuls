@@ -30,8 +30,8 @@ class Batterie extends IPSModule {
 		// Variablen anlegen
 		$this->RegisterVariableFloat("fuellstand", "Füllstand", "~Electricity", 10);
 		$this->RegisterVariableFloat("aktuelleLadeleistung", "aktuelle Ladeleistung", "~Watt.14490", 20);
-		$this->RegisterVariableFloat("eingespeisteEngerie", "Eingepeiste Energie", "~Electricity", 30);
 		$this->RegisterVariableFloat("aktuelleEinspeisung", "aktuelle Einspeisung", "~Watt.14490", 40);
+		$this->RegisterVariableFloat("eingespeisteEnergie", "Eingepeiste Energie", "~Electricity", 30);
 		$this->RegisterVariableFloat("aktuellerNetzbezug", "aktueller Netzbezug", "~Watt.14490", 50);
 		$this->RegisterVariableFloat("bezogeneEnergie", "Bezogene Energie", "~Electricity", 60);
 		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 70);
@@ -91,7 +91,7 @@ class Batterie extends IPSModule {
 
 		// Berechnung, der einzelnen Werte
 		if ($aktuellerVerbrauch > $aktuelleErzeugung) {
-			if ($fuellstand == 0) {
+			if ($fuellstand <= 0) {
 				setValue($this->GetIDforIdent("aktuellerNetzbezug"), max($aktuellerVerbrauch - $aktuelleErzeugung,0));
 				setValue($this->GetIDforIdent("aktuelleLadeleistung"), 0);
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), 0);
@@ -104,59 +104,24 @@ class Batterie extends IPSModule {
 				setValue($this->GetIDforIdent("fuellstand"), max($fuellstand - max($aktuelleErzeugung - $aktuellerVerbrauch, -1*$maxLadeleistung)/1000/3600, 0));
 			}
 		} else {
-			if ($fuellstand == $kapazität) {
+			if ($fuellstand >= $kapazität) {
 				setValue($this->GetIDforIdent("aktuellerNetzbezug"), 0);
-				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung));
+				setValue($this->GetIDforIdent("aktuelleLadeleistung"), 0);
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch));
 				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch,0)/1000/3600);
 			} else {
 				setValue($this->GetIDforIdent("aktuellerNetzbezug"), 0);
 				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung));
-				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung));
+				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung,0));
 				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung,0)/1000/3600);
 				setValue($this->GetIDforIdent("fuellstand"), min($fuellstand + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/3600, $kapazität));
-				setValue($this->GetIDforIdent("gespeicherteEnergie"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/3600);
+				setValue($this->GetIDforIdent("gespeicherteEnergie"), $gespeicherteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/3600);
 			}
 		}
 
-
-
-
-
 		SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $this->ReadPropertyInteger("Kapazitaet"));
 
-
 	}
-
-
-
-
-
-
-	//Variablenprofil für den Action erstellen
-	private function CreateVarProfileStromzaehlerEnergy() {
-		if (!IPS_VariableProfileExists("Stromzaehler.Energy")) {
-			IPS_CreateVariableProfile("Stromzaehler.Energy", 2);
-			IPS_SetVariableProfileText("Stromzaehler.Energy", "", " kWh");
-			IPS_SetVariableProfileDigits("Stromzaehler.Energy", 2);
-		 }
-	}
-
-	//Variablenprofil für die Battery erstellen
-	private function CreateVarProfileStromzaehlerPower() {
-			if (!IPS_VariableProfileExists("Stromzaehler.Power")) {
-				IPS_CreateVariableProfile("Stromzaehler.Power", 1);
-				IPS_SetVariableProfileText("Stromzaehler.Power", "", " W");
-			 }
-	}
-
-
-
-
-
-
-
-
 
 
  }
