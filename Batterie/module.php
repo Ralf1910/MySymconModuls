@@ -103,7 +103,7 @@ class Batterie extends IPSModule {
 				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugung - $aktuellerVerbrauch, -1*$maxLadeleistung));
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), 0);
 				setValue($this->GetIDforIdent("bezogeneEnergie"), $bezogeneEnergie + max($aktuellerVerbrauch - $aktuelleErzeugung - $maxLadeleistung,0)/1000/3600);
-				setValue($this->GetIDforIdent("fuellstand"), max($fuellstand - max($aktuelleErzeugung - $aktuellerVerbrauch, -1*$maxLadeleistung)/1000/3600, 0);
+				setValue($this->GetIDforIdent("fuellstand"), max($fuellstand - max($aktuelleErzeugung - $aktuellerVerbrauch, -1*$maxLadeleistung)/1000/3600, 0));
 			}
 		} else {
 			if ($fuellstand == $kapazität) {
