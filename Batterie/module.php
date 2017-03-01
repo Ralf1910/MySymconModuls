@@ -108,7 +108,7 @@ class Batterie extends IPSModule {
 		} else {
 			if ($fuellstand == $kapazität) {
 				setValue($this->GetIDforIdent("aktuellerNetzbezug"), 0);
-				setValue($this->GetIDforIdent("aktuelleLadeleistung"), 0); max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung));
+				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung));
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch);
 				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch,0)/1000/3600);
 			} else {
@@ -116,7 +116,7 @@ class Batterie extends IPSModule {
 				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung));
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung));
 				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung,0)/1000/3600);
-				setValue($this->GetIDforIdent("fuellstand"), min($fuellstand + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/3600, $kapazität);
+				setValue($this->GetIDforIdent("fuellstand"), min($fuellstand + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/3600, $kapazität));
 				setValue($this->GetIDforIdent("gespeicherteEnergie"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/3600);
 			}
 		}
