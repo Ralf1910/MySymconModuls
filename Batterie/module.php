@@ -30,8 +30,8 @@ class Batterie extends IPSModule {
 		// Variablen anlegen
 		$this->RegisterVariableFloat("fuellstand", "Füllstand", "~Electricity", 10);
 		$this->RegisterVariableInteger("aktuelleLadeleistung", "aktuelle Ladeleistung", "Power.Watt", 20);
-		$this->RegisterVariableInteger("aktuelleEinspeisung", "aktuelle Einspeisung", "Power.Watt", 40);
-		$this->RegisterVariableFloat("eingespeisteEnergie", "Eingepeiste Energie", "~Electricity", 30);
+		$this->RegisterVariableInteger("aktuelleEinspeisung", "aktuelle Einspeisung", "Power.Watt", 30);
+		$this->RegisterVariableFloat("eingespeisteEnergie", "Eingepeiste Energie", "~Electricity", 40);
 		$this->RegisterVariableInteger("aktuellerNetzbezug", "aktueller Netzbezug", "Power.Watt", 50);
 		$this->RegisterVariableFloat("bezogeneEnergie", "Bezogene Energie", "~Electricity", 60);
 		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 70);
