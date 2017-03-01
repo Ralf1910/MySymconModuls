@@ -11,7 +11,7 @@
 	{ "type": "SelectVariable", "name": "Verbraucher3", "caption": "Stromverbraucher 3" },
 	{ "type": "SelectVariable", "name": "Verbraucher4", "caption": "Stromverbraucher 4" },
 	{ "type": "SelectVariable", "name": "Verbraucher5", "caption": "Stromverbraucher 5" },
-	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Batteriekapazität (Wh)" },
-	{ "type": "ValidationTextBox", "name": "Ladeleistung", "caption": "Be-/Entladeleistung (W)" }
+	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Batteriekapazität(Wh)" },
+	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" }
   ]
 }
