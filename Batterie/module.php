@@ -125,7 +125,7 @@ class Batterie extends IPSModule {
 
 
 
-		SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $this->ReadPropertyInteger("kapazität"));
+		SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $this->ReadPropertyInteger("Kapazitaet"));
 
 
 	}
