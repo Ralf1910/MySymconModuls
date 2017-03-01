@@ -41,7 +41,7 @@ class Batterie extends IPSModule {
 		$this->RegisterVariableFloat("aktuellerNetzbezug", "aktueller Netzbezug", "", 50);
 
 		// Updates einstellen
-		$this->RegisterTimer("update", 10*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 10*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
 		//$this->RegisterTimer("UpdateJahreswert", 60*60*1000, 'Stromzaehler_UpdateJahreswert($_IPS[\'TARGET\']);');
 	}
 
