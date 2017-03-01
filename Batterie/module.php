@@ -29,16 +29,17 @@ class Batterie extends IPSModule {
 		//$this->CreateVarProfileStromzaehlerPower();
 
 		// Variablen anlegen
-		$this->RegisterVariableFloat("fuellstand", "Füllstand", "", 10);
-		$this->RegisterVariableFloat("gespeicherteEnergie", "Gespeicherte Energie", "", 20);
-		$this->RegisterVariableFloat("zyklen", "Zyklen", "", 30);
-		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 40);
-		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Gespeicherte Energie pro Jahr", "", 50);
-		$this->RegisterVariableFloat("eingespeisteEngerie", "Eingepeiste Energie", "", 50);
-		$this->RegisterVariableFloat("bezogeneEngerie", "Bezogene Energie", "", 50);
-		$this->RegisterVariableFloat("aktuelleLadeleistung", "aktuelle Ladeleistung", "", 50);
-		$this->RegisterVariableFloat("aktuelleEinspeisung", "aktuelle Einspeisung", "", 50);
-		$this->RegisterVariableFloat("aktuellerNetzbezug", "aktueller Netzbezug", "", 50);
+		$this->RegisterVariableFloat("fuellstand", "Füllstand", "~Electricity", 10);
+		$this->RegisterVariableFloat("aktuelleLadeleistung", "aktuelle Ladeleistung", "~Watt.14490", 20);
+		$this->RegisterVariableFloat("eingespeisteEngerie", "Eingepeiste Energie", "~Electricity", 30);
+		$this->RegisterVariableFloat("aktuelleEinspeisung", "aktuelle Einspeisung", "~Watt.14490", 40);
+		$this->RegisterVariableFloat("aktuellerNetzbezug", "aktueller Netzbezug", "~Watt.14490", 50);
+		$this->RegisterVariableFloat("bezogeneEngerie", "Bezogene Energie", "~Electricity", 60);
+		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 70);
+		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Gespeicherte Energie pro Jahr", "~Electricity", 80);
+		$this->RegisterVariableFloat("gespeicherteEnergie", "Gespeicherte Energie", "~Electricity", 90);
+		$this->RegisterVariableFloat("zyklen", "Zyklen", "", 100);
+
 
 		// Updates einstellen
 		$this->RegisterTimer("Update", 10*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
