@@ -11,6 +11,8 @@ class Batterie extends IPSModule {
 	public function Create() {
 		// Diese Zeile nicht löschen.
 		parent::Create();
+
+		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
 		$this->RegisterPropertyInteger("Verbraucher1", 0);
 		$this->RegisterPropertyInteger("Verbraucher2", 0);
 		$this->RegisterPropertyInteger("Verbraucher3", 0);
@@ -24,9 +26,6 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("Kapazitaet", 0);
 		$this->RegisterPropertyInteger("MaxLadeleistung", 0);
 
-		// Variablenprofile anlegen
-		//$this->CreateVarProfileStromzaehlerEnergy();
-		//$this->CreateVarProfileStromzaehlerPower();
 
 		// Variablen anlegen
 		$this->RegisterVariableFloat("fuellstand", "Füllstand", "~Electricity", 10);
@@ -34,7 +33,7 @@ class Batterie extends IPSModule {
 		$this->RegisterVariableFloat("eingespeisteEngerie", "Eingepeiste Energie", "~Electricity", 30);
 		$this->RegisterVariableFloat("aktuelleEinspeisung", "aktuelle Einspeisung", "~Watt.14490", 40);
 		$this->RegisterVariableFloat("aktuellerNetzbezug", "aktueller Netzbezug", "~Watt.14490", 50);
-		$this->RegisterVariableFloat("bezogeneEngerie", "Bezogene Energie", "~Electricity", 60);
+		$this->RegisterVariableFloat("bezogeneEnergie", "Bezogene Energie", "~Electricity", 60);
 		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 70);
 		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Gespeicherte Energie pro Jahr", "~Electricity", 80);
 		$this->RegisterVariableFloat("gespeicherteEnergie", "Gespeicherte Energie", "~Electricity", 90);
@@ -42,7 +41,7 @@ class Batterie extends IPSModule {
 
 
 		// Updates einstellen
-		$this->RegisterTimer("Update", 10*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 60*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
 		//$this->RegisterTimer("UpdateJahreswert", 60*60*1000, 'Stromzaehler_UpdateJahreswert($_IPS[\'TARGET\']);');
 	}
 
@@ -53,19 +52,15 @@ class Batterie extends IPSModule {
 		parent::ApplyChanges();
 
 		//Timerzeit setzen in Minuten
-		$this->SetTimerInterval("Update", 10*1000);
+		$this->SetTimerInterval("Update", 60*1000);
 		// $this->SetTimerInterval("UpdateJahreswert", 60*60*1000);
-
-		// Variablenprofile anlegen
-		//$this->CreateVarProfileStromzaehlerEnergy();
-		//$this->CreateVarProfileStromzaehlerPower();
-
 	}
 
 
 
 	public function Update() {
 
+		// Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauch 	= 	0;
 		if ($this->ReadPropertyInteger("Verbraucher1")>0) $aktuellerVerbrauch += getValue($this->ReadPropertyInteger("Verbraucher1"));
 		if ($this->ReadPropertyInteger("Verbraucher2")>0) $aktuellerVerbrauch += getValue($this->ReadPropertyInteger("Verbraucher2"));
@@ -73,6 +68,7 @@ class Batterie extends IPSModule {
 		if ($this->ReadPropertyInteger("Verbraucher4")>0) $aktuellerVerbrauch += getValue($this->ReadPropertyInteger("Verbraucher4"));
 		if ($this->ReadPropertyInteger("Verbraucher5")>0) $aktuellerVerbrauch += getValue($this->ReadPropertyInteger("Verbraucher5"));
 
+		// Gesamterzeugung zusammenaddieren
 		$aktuelleErzeugung		=	0;
 		if ($this->ReadPropertyInteger("Erzeuger1")>0) $aktuelleErzeugung += getValue($this->ReadPropertyInteger("Erzeuger1"));
 		if ($this->ReadPropertyInteger("Erzeuger2")>0) $aktuelleErzeugung += getValue($this->ReadPropertyInteger("Erzeuger2"));
@@ -93,6 +89,7 @@ class Batterie extends IPSModule {
 		$fuellstand				=	getValue($this->GetIDforIdent("fuellstand"));
 
 
+		// Berechnung, der einzelnen Werte
 		if ($aktuellerVerbrauch > $aktuelleErzeugung) {
 			if ($fuellstand == 0) {
 				setValue($this->GetIDforIdent("aktuellerNetzbezug"), max($aktuellerVerbrauch - $aktuelleErzeugung,0));
