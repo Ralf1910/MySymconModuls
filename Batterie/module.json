@@ -1,0 +1,13 @@
+{
+"id": "{9A2B348E-7159-4ADA-983B-AE5C914FA00C}",
+  "name": "Batterie",
+  "type": 3,
+  "vendor": "",
+  "aliases": [
+    "Virtuelle Batterie"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "Batterie"
+}

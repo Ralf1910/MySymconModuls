@@ -1,0 +1,17 @@
+{
+  "elements":
+  [
+	{ "type": "SelectVariable", "name": "Erzeuger1", "caption": "Stromerzeuger 1" },
+	{ "type": "SelectVariable", "name": "Erzeuger2", "caption": "Stromerzeuger 2" },
+	{ "type": "SelectVariable", "name": "Erzeuger3", "caption": "Stromerzeuger 3" },
+	{ "type": "SelectVariable", "name": "Erzeuger4", "caption": "Stromerzeuger 4" },
+	{ "type": "SelectVariable", "name": "Erzeuger5", "caption": "Stromerzeuger 5" },
+	{ "type": "SelectVariable", "name": "Verbraucher1", "caption": "Stromverbraucher 1" },
+	{ "type": "SelectVariable", "name": "Verbraucher2", "caption": "Stromverbraucher 2" },
+	{ "type": "SelectVariable", "name": "Verbraucher3", "caption": "Stromverbraucher 3" },
+	{ "type": "SelectVariable", "name": "Verbraucher4", "caption": "Stromverbraucher 4" },
+	{ "type": "SelectVariable", "name": "Verbraucher5", "caption": "Stromverbraucher 5" },
+	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Batteriekapazität (Wh)" },
+	{ "type": "ValidationTextBox", "name": "Ladeleistung", "caption": "Be-/Entladeleistung (W)" },
+  ]
+}
