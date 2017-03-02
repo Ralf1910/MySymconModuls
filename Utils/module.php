@@ -41,21 +41,3 @@ class Utilities extends IPSModule {
 
 }
 
-	public function UpdateJahreswert() {
-
-			$archivID = IPS_GetVariableIDByName("Archiv", 0);
-			$historischeWerte = AC_GetLoggedValues($archivID, $this->ReadPropertyInteger("CounterObjektID"), strtotime('today midnight') - 50000, strtotime('today midnight'), 1);
-	 	    foreach($historischeWerte as $wertZumTagesbeginn) {
-		    	SetValueFloat($this->ReadPropertyInteger("heutigerVerbrauch"), $this->ReadPropertyInteger("CounterObjektID") - $wertZumTagesbeginn['Value']);
-		    }
-
-		}
-
-
-
-
-
-
-
- }
-
