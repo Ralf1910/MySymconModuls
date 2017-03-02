@@ -1,7 +1,7 @@
 <?
 //  Modul zur Berechnung und Anzeige der Abholtermine
 //
-//	Version 0.1
+//	Version 0.8
 //
 // ************************************************************
 

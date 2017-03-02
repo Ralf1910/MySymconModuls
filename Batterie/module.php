@@ -31,7 +31,7 @@ class Batterie extends IPSModule {
 		$this->RegisterVariableFloat("fuellstand", "Füllstand", "~Electricity", 10);
 		$this->RegisterVariableInteger("aktuelleLadeleistung", "aktuelle Ladeleistung", "Power.Watt", 20);
 		$this->RegisterVariableInteger("aktuelleEinspeisung", "aktuelle Einspeisung", "Power.Watt", 30);
-		$this->RegisterVariableFloat("eingespeisteEnergie", "Eingepeiste Energie", "~Electricity", 40);
+		$this->RegisterVariableFloat("eingespeisteEnergie", "Eingespeiste Energie", "~Electricity", 40);
 		$this->RegisterVariableInteger("aktuellerNetzbezug", "aktueller Netzbezug", "Power.Watt", 50);
 		$this->RegisterVariableFloat("bezogeneEnergie", "Bezogene Energie", "~Electricity", 60);
 		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 70);
@@ -104,7 +104,7 @@ class Batterie extends IPSModule {
 				setValue($this->GetIDforIdent("fuellstand"), max($fuellstand - max($aktuelleErzeugung - $aktuellerVerbrauch, -1*$maxLadeleistung)/1000/60, 0));
 			}
 		} else {
-			if ($fuellstand >= $kapazität) {
+			if ($fuellstand >= $kapazitaet) {
 				setValue($this->GetIDforIdent("aktuellerNetzbezug"), 0);
 				setValue($this->GetIDforIdent("aktuelleLadeleistung"), 0);
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch));
@@ -114,7 +114,7 @@ class Batterie extends IPSModule {
 				setValue($this->GetIDforIdent("aktuelleLadeleistung"), max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung));
 				setValue($this->GetIDforIdent("aktuelleEinspeisung"), max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung,0));
 				setValue($this->GetIDforIdent("eingespeisteEnergie"), $eingespeisteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch - $maxLadeleistung,0)/1000/60);
-				setValue($this->GetIDforIdent("fuellstand"), min($fuellstand + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/60, $kapazität));
+				setValue($this->GetIDforIdent("fuellstand"), min($fuellstand + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/60, $kapazitaet));
 				setValue($this->GetIDforIdent("gespeicherteEnergie"), $gespeicherteEnergie + max($aktuelleErzeugung - $aktuellerVerbrauch, $maxLadeleistung)/1000/60);
 			}
 		}

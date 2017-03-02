@@ -15,10 +15,7 @@ class KoboldVR200 extends IPSModule {
 		$this->RegisterPropertyString("SerialNumber", "");
 		$this->RegisterPropertyString("SecretKey", "");
 		$this->RegisterPropertyInteger("UpdateKobold", 1);
-		$this->RegisterPropertyInteger("CleaningIntervalWinter", 2);
-		$this->RegisterPropertyInteger("CleaningIntervalSpring", 3);
-		$this->RegisterPropertyInteger("CleaningIntervalSummer", 3);
-		$this->RegisterPropertyInteger("CleaningIntervalAutum", 2);
+		$this->RegisterPropertyInteger("CleaningInterval", 36);
 
 		// Variablenprofile anlegen
 		$this->CreateVarProfileVR200Action();
@@ -59,6 +56,7 @@ class KoboldVR200 extends IPSModule {
 
 			// Variablen aktualisieren
 			$this->MaintainVariable("lastCleaning", "letzte Reinigung", 1, "~UnixTimestampDate", 10, true);
+			$this->MaintainVariable("cleaningToday", "Reinigung steht heute an", 0, "~Switch", 15, true);
 			$this->MaintainVariable("version", "Version", 1, "", 10, true);
 			$this->MaintainVariable("reqId", "Requested ID", 1, "", 20, true);
 			$this->MaintainVariable("error", "Fehlermeldung", 3, "", 30, true);
@@ -122,6 +120,12 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("availableCommandsPause"), $this->ToBoolean($robotState['availableCommands']['pause']));
 		SetValue($this->GetIDForIdent("availableCommandsResume"), $this->ToBoolean($robotState['availableCommands']['resume']));
 		SetValue($this->GetIDForIdent("availableCommandsGoToBase"), $this->ToBoolean($robotState['availableCommands']['goToBase']));
+
+		if (Date("G", time()) == 0)
+			if (time()-GetValue($this->GetIDForIdent("lastCleaning")) > 3600*$this->RegisterPropertyInteger("CleaningInterval"))
+				SetValue($this->GetIDForIdent("cleaningToday"), true);
+			else
+				SetValue($this->GetIDForIdent("cleaningToday"), false);
 	}
 
 
