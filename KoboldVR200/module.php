@@ -121,7 +121,7 @@ class KoboldVR200 extends IPSModule {
 		SetValue($this->GetIDForIdent("availableCommandsResume"), $this->ToBoolean($robotState['availableCommands']['resume']));
 		SetValue($this->GetIDForIdent("availableCommandsGoToBase"), $this->ToBoolean($robotState['availableCommands']['goToBase']));
 
-		if (Date("G", time()) == 20)
+		if (Date("G", time()) == 0)
 			if (time()-GetValue($this->GetIDForIdent("lastCleaning")) > 3600*$this->RegisterPropertyInteger("CleaningInterval"))
 				SetValue($this->GetIDForIdent("cleaningToday"), true);
 			else

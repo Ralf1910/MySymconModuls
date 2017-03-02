@@ -1,0 +1,7 @@
+{
+  "elements":
+  [
+	{ "type": "SelectVariable", "name": "archive", "caption": "Archiv" }
+	
+  ]
+}
