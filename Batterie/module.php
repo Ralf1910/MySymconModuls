@@ -127,7 +127,7 @@ class Batterie extends IPSModule {
 
 		SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $kapazitaet);
 
-		SetValue($this->GetIDforIdent("fuellstandProzent"), round((getValue($this->GetIDforIdent("fuellstand"))/ $kapazitaet)/5)*5;
+		SetValue($this->GetIDforIdent("fuellstandProzent"), round((getValue($this->GetIDforIdent("fuellstand"))/ $kapazitaet)/5)*5);
 
 		//SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), Utils_RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
 
