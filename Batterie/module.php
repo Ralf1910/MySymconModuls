@@ -28,21 +28,24 @@ class Batterie extends IPSModule {
 
 
 		// Variablen anlegen
-		$this->RegisterVariableFloat("fuellstand", "Füllstand", "~Electricity", 10);
-		$this->RegisterVariableInteger("fuellstandProzent", "Füllstand Prozent", "", 10);
-		$this->RegisterVariableInteger("aktuelleLadeleistung", "aktuelle Ladeleistung", "Power.Watt", 20);
-		$this->RegisterVariableInteger("aktuelleEinspeisung", "aktuelle Einspeisung", "Power.Watt", 30);
-		$this->RegisterVariableFloat("eingespeisteEnergie", "Eingespeiste Energie", "~Electricity", 40);
-		$this->RegisterVariableInteger("aktuellerNetzbezug", "aktueller Netzbezug", "Power.Watt", 50);
-		$this->RegisterVariableFloat("bezogeneEnergie", "Bezogene Energie", "~Electricity", 60);
+		$this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10);
+		$this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "", 20);
+		$this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "", 30);
+		$this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Power.Watt", 110);
+		$this->RegisterVariableInteger("aktuelleEinspeisung", "Power - Einspeisung", "Power.Watt", 120);
+		$this->RegisterVariableInteger("aktuelleEigennutzung", "Power - Eigennutzung", "Power.Watt", 130);
+		$this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Power.Watt", 140);
+		$this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210);
+		$this->RegisterVariableFloat("selbstvertrauchteEnergie", "Energie - selbstverbraucht", "~Electricity", 220);
+		$this->RegisterVariableFloat("bezogeneEnergie", "Energie - bezogen", "~Electricity", 230);
+		$this->RegisterVariableFloat("gespeicherteEnergie", "Energie - gespeichert", "~Electricity", 240);
 		$this->RegisterVariableFloat("rollierendeZyklen", "Rollierende Zyklen pro Jahr", "", 70);
 		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Gespeicherte Energie pro Jahr", "~Electricity", 80);
-		$this->RegisterVariableFloat("gespeicherteEnergie", "Gespeicherte Energie", "~Electricity", 90);
-		$this->RegisterVariableFloat("zyklen", "Zyklen", "", 100);
+
 		$this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "", 110);
 		$this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "", 120);
-		$this->RegisterVariableInteger("aktuelleEigennutzung", "aktuelle Eigennutzung", "Power.Watt", 30);
-		$this->RegisterVariableFloat("selbstvertrauchteEnergie", "Selbstverbrauchte Energie", "~Electricity", 40);
+
+
 
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
