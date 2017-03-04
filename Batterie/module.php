@@ -39,7 +39,10 @@ class Batterie extends IPSModule {
 		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Gespeicherte Energie pro Jahr", "~Electricity", 80);
 		$this->RegisterVariableFloat("gespeicherteEnergie", "Gespeicherte Energie", "~Electricity", 90);
 		$this->RegisterVariableFloat("zyklen", "Zyklen", "", 100);
-
+		$this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "", 110);
+		$this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "", 120);
+		$this->RegisterVariableInteger("aktuelleEigennutzung", "aktuelle Eigennutzung", "Power.Watt", 30);
+		$this->RegisterVariableFloat("selbstvertrauchteEnergie", "Selbstverbrauchte Energie", "~Electricity", 40);
 
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
@@ -94,11 +97,16 @@ class Batterie extends IPSModule {
 
 		$gespeicherteEnergie	=	getValue($this->GetIDforIdent("gespeicherteEnergie"));
 
+		$selbstvertrauchteEnergie	= getValue($this->GetIDforIdent("selbstvertrauchteEnergie"));
+
 		$maxLadeleistung		= 	$this->ReadPropertyInteger("MaxLadeleistung");
 
 		$kapazitaet				=	$this->ReadPropertyInteger("Kapazitaet")/1000;
 
 		$fuellstand				=	getValue($this->GetIDforIdent("fuellstand"));
+
+
+
 
 
 		// Berechnung, der einzelnen Werte
@@ -140,6 +148,10 @@ class Batterie extends IPSModule {
 		SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), Utils_RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
 
 		SetValue($this->GetIDforIdent("rollierendeZyklen"), Utils_RollierenderJahreswert($this->GetIDforIdent("zyklen")));
+
+		SetValue($this->GetIDforIdent("aktuelleEigennutzung"), min($aktuellerVerbrauch, $aktuelleErzeugung));
+
+		SetValue($this->GetIDforIdent("selbstvertrauchteEnergie"), $selbstverbrauchteEnergie + min($aktuellerVerbrauch, $aktuelleErzeugung)/60000);
 
 	}
 
