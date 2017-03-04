@@ -57,16 +57,16 @@ class Batterie extends IPSModule {
 		// $this->SetTimerInterval("UpdateJahreswert", 60*60*1000);
 	}
 
-public function RollierenderJahreswert($VariableID) {
+	public function RollierenderJahreswert($VarID) {
 
 		//Den Datensatz von vor 365,25 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
-		$historischeWerte = AC_GetLoggedValues($this->RegisterPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
+		$historischeWerte = AC_GetLoggedValues($this->RegisterPropertyInteger("Archiv"), $VarID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
 		$wertVor365d = 0;
 		foreach($historischeWerte as $wertVorEinemJahr) {
 			$wertVor365d = $wertVorEinemJahr['Value'];
 		}
 
-		return (GetValue($VariableID) - $wertVor365d);
+		return (GetValue($VarID) - $wertVor365d);
 	}
 
 
