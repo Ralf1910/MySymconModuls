@@ -76,6 +76,9 @@ class Batterie extends IPSModule {
 		if ($this->ReadPropertyInteger("Erzeuger4")>0) $aktuelleErzeugung += getValue($this->ReadPropertyInteger("Erzeuger4"));
 		if ($this->ReadPropertyInteger("Erzeuger5")>0) $aktuelleErzeugung += getValue($this->ReadPropertyInteger("Erzeuger5"));
 
+		echo $aktuelleErzeugung."\n";
+		echo $aktuellerVerbrauch."\n";
+
 		$bezogeneEnergie		= 	getValue($this->GetIDforIdent("bezogeneEnergie"));
 
 		$eingespeisteEnergie	=	getValue($this->GetIDforIdent("eingespeisteEnergie"));
