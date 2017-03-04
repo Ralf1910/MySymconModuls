@@ -84,7 +84,7 @@ class Batterie extends IPSModule {
 
 		$maxLadeleistung		= 	$this->ReadPropertyInteger("MaxLadeleistung");
 
-		$kapazitaet				=	$this->ReadPropertyInteger("Kapazitaet");
+		$kapazitaet				=	$this->ReadPropertyInteger("Kapazitaet")/1000;
 
 		$fuellstand				=	getValue($this->GetIDforIdent("fuellstand"));
 
