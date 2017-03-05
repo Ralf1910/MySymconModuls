@@ -1,7 +1,0 @@
-{
-  "elements":
-  [
-	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" }
-	
-  ]
-}
