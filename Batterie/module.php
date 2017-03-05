@@ -34,29 +34,29 @@ class Batterie extends IPSModule {
 
 		// Variablen anlegen
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
-		$this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20);
-		$this->RegisterVariableInteger("zyklen", "Batterie - Zyklen", "", 30);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("zyklen", "Batterie - Zyklen", "", 30), true);
 
-		$this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Power.Watt", 110);
-		$this->RegisterVariableInteger("aktuelleEinspeisung", "Power - Einspeisung", "Power.Watt", 120);
-		$this->RegisterVariableInteger("aktuelleEigennutzung", "Power - Eigennutzung", "Power.Watt", 130);
-		$this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Power.Watt", 140);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Power.Watt", 110), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEinspeisung", "Power - Einspeisung", "Power.Watt", 120), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEigennutzung", "Power - Eigennutzung", "Power.Watt", 130), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Power.Watt", 140), true);
 
-		$this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210);
-		$this->RegisterVariableFloat("selbstverbrauchteEnergie", "Energie - selbstverbraucht", "~Electricity", 220);
-		$this->RegisterVariableFloat("bezogeneEnergie", "Energie - bezogen", "~Electricity", 230);
-		$this->RegisterVariableFloat("gespeicherteEnergie", "Energie - gespeichert", "~Electricity", 240);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("selbstverbrauchteEnergie", "Energie - selbstverbraucht", "~Electricity", 220), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("bezogeneEnergie", "Energie - bezogen", "~Electricity", 230), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("gespeicherteEnergie", "Energie - gespeichert", "~Electricity", 240), true);
 
-		$this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310);
-		$this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320), true);
 
-		$this->RegisterVariableInteger("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410);
-		$this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420);
-		$this->RegisterVariableFloat("rollierendeSelbstvertrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430);
-		$this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440);
-		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450);
-		$this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460);
-		$this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstvertrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470), true);
 
 
 
