@@ -24,8 +24,8 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("Erzeuger3", 0);
 		$this->RegisterPropertyInteger("Erzeuger4", 0);
 		$this->RegisterPropertyInteger("Erzeuger5", 0);
-		$this->RegisterPropertyInteger("Kapazitaet", 0);
-		$this->RegisterPropertyInteger("MaxLadeleistung", 0);
+		$this->RegisterPropertyInteger("Kapazitaet", 7000);
+		$this->RegisterPropertyInteger("MaxLadeleistung", 2000);
 
 
 
@@ -59,7 +59,7 @@ class Batterie extends IPSModule {
 
 
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'BAT_Update2($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
 
 	}
 
@@ -86,7 +86,7 @@ class Batterie extends IPSModule {
 		return (GetValue($VariableID) - $wertVor365d);
 	}
 
-	public function Update2() {
+	public function Update() {
 
 		// Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauch 	= 	0;
