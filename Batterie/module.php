@@ -51,7 +51,7 @@ class Batterie extends IPSModule {
 
 
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 60*1000, 'BAT_Update2($_IPS[\'TARGET\']);');
 
 	}
 
@@ -66,7 +66,7 @@ class Batterie extends IPSModule {
 	}
 
 
-	public function Update() {
+	public function Update2() {
 
 		// Gesamtverbrauch zusammenaddieren
 		$aktuellerVerbrauch 	= 	0;
