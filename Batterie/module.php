@@ -51,7 +51,7 @@ class Batterie extends IPSModule {
 
 
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'Batterie_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 60*1000, 'BATTERIE_Update($_IPS[\'TARGET\']);');
 
 	}
 
