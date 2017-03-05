@@ -27,7 +27,7 @@ class Utilities extends IPSModule {
 
 
 
-	public function RollierenderJahreswert($VariableID) {
+	public function RollierenderJahreswert(Integer $VariableID) {
 
 		//Den Datensatz von vor 365,25 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
 		$historischeWerte = AC_GetLoggedValues($this->ReadPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
