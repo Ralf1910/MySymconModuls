@@ -43,18 +43,27 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Power.Watt", 140), true);
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("eingespeisteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("selbstverbrauchteEnergie", "Energie - selbstverbraucht", "~Electricity", 220), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("selbstverbrauchteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("bezogeneEnergie", "Energie - bezogen", "~Electricity", 230), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("bezogeneEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("gespeicherteEnergie", "Energie - gespeichert", "~Electricity", 240), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("gespeicherteEnergie"), 1);
+
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320), true);
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeEingespeisteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstvertrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeSelbstvertrauchteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeBezogeneEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeGespeicherteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470), true);
 
