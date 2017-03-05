@@ -1,6 +1,7 @@
 {
   "elements":
   [
+	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" },
 	{ "type": "SelectVariable", "name": "Erzeuger1", "caption": "Stromerzeuger 1" },
 	{ "type": "SelectVariable", "name": "Erzeuger2", "caption": "Stromerzeuger 2" },
 	{ "type": "SelectVariable", "name": "Erzeuger3", "caption": "Stromerzeuger 3" },
@@ -12,7 +13,7 @@
 	{ "type": "SelectVariable", "name": "Verbraucher4", "caption": "Stromverbraucher 4" },
 	{ "type": "SelectVariable", "name": "Verbraucher5", "caption": "Stromverbraucher 5" },
 	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Kapazität(Wh)" },
-	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" },
-	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" }
+	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" }
+
   ]
 }

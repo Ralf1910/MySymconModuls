@@ -13,6 +13,7 @@ class Batterie extends IPSModule {
 		parent::Create();
 
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
+		$this->RegisterPropertyInteger("Archiv",IPS_GetVariableIDByName("Archiv", 0 ));
 		$this->RegisterPropertyInteger("Verbraucher1", 0);
 		$this->RegisterPropertyInteger("Verbraucher2", 0);
 		$this->RegisterPropertyInteger("Verbraucher3", 0);
@@ -26,12 +27,12 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("Kapazitaet", 0);
 		$this->RegisterPropertyInteger("MaxLadeleistung", 0);
 
-		$this->RegisterPropertyInteger("Archiv",0);
+
 
 
 		// Variablen anlegen
 		$this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10);
-		$this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "", 20);
+		$this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20);
 		$this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "", 30);
 
 		$this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Power.Watt", 110);
@@ -40,15 +41,20 @@ class Batterie extends IPSModule {
 		$this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Power.Watt", 140);
 
 		$this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210);
-		$this->RegisterVariableFloat("selbstvertrauchteEnergie", "Energie - selbstverbraucht", "~Electricity", 220);
+		$this->RegisterVariableFloat("selbstverbrauchteEnergie", "Energie - selbstverbraucht", "~Electricity", 220);
 		$this->RegisterVariableFloat("bezogeneEnergie", "Energie - bezogen", "~Electricity", 230);
 		$this->RegisterVariableFloat("gespeicherteEnergie", "Energie - gespeichert", "~Electricity", 240);
 
-		$this->RegisterVariableFloat("rollierendeZyklen", "Pro Jahr - Zyklen", "", 310);
-		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 320);
+		$this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310);
+		$this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320);
 
-		$this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "", 410);
-		$this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "", 420);
+		$this->RegisterVariableInteger("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410);
+		$this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420);
+		$this->RegisterVariableFloat("rollierendeSelbstvertrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430);
+		$this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440);
+		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450);
+		$this->RegisterVariableFloat("rollierendeEVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460);
+		$this->RegisterVariableFloat("rollierendeEVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470);
 
 
 
@@ -68,7 +74,7 @@ class Batterie extends IPSModule {
 	}
 
 
-	public function RollierenderJahreswert(Integer $VariableID) {
+	private function RollierenderJahreswert(Integer $VariableID) {
 
 		//Den Datensatz von vor 365,25 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
 		$historischeWerte = AC_GetLoggedValues($this->ReadPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
@@ -152,9 +158,9 @@ class Batterie extends IPSModule {
 
 		SetValue($this->GetIDforIdent("fuellstandProzent"), round((getValue($this->GetIDforIdent("fuellstand"))*100 / $kapazitaet)/5)*5);
 
-		SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), UTILS_RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
+		SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
 
-		SetValue($this->GetIDforIdent("rollierendeZyklen"), UTILS_RollierenderJahreswert($this->GetIDforIdent("zyklen")));
+		SetValue($this->GetIDforIdent("rollierendeZyklen"), RollierenderJahreswert($this->GetIDforIdent("zyklen")));
 
 		SetValue($this->GetIDforIdent("aktuelleEigennutzung"), min($aktuellerVerbrauch, $aktuelleErzeugung));
 
