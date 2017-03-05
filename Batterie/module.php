@@ -34,6 +34,8 @@ class Batterie extends IPSModule {
 
 		// Variablen anlegen
 		$varID = $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10);
+		echo $varID."\n";
+		echo $archiv."\n";
 		AC_SetLoggingStatus($archiv, $varID, true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("zyklen", "Batterie - Zyklen", "", 30), true);
@@ -62,7 +64,7 @@ class Batterie extends IPSModule {
 
 
 		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
+		$this->RegisterTimer("Update", 0, 'BAT_Update($_IPS[\'TARGET\']);');
 
 	}
 
