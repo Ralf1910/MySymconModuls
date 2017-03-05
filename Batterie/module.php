@@ -12,8 +12,10 @@ class Batterie extends IPSModule {
 		// Diese Zeile nicht löschen.
 		parent::Create();
 
+		$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
+
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
-		$this->RegisterPropertyInteger("Archiv",IPS_GetInstanceIDByName("Archiv", 0 ));
+		$this->RegisterPropertyInteger("Archiv",$archiv);
 		$this->RegisterPropertyInteger("Verbraucher1", 0);
 		$this->RegisterPropertyInteger("Verbraucher2", 0);
 		$this->RegisterPropertyInteger("Verbraucher3", 0);
@@ -31,7 +33,7 @@ class Batterie extends IPSModule {
 
 
 		// Variablen anlegen
-		$this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
 		$this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20);
 		$this->RegisterVariableInteger("zyklen", "Batterie - Zyklen", "", 30);
 
