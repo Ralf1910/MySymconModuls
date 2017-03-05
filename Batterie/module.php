@@ -53,8 +53,8 @@ class Batterie extends IPSModule {
 		$this->RegisterVariableFloat("rollierendeSelbstvertrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430);
 		$this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440);
 		$this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450);
-		$this->RegisterVariableFloat("rollierendeEVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460);
-		$this->RegisterVariableFloat("rollierendeEVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470);
+		$this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460);
+		$this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470);
 
 
 
@@ -75,7 +75,6 @@ class Batterie extends IPSModule {
 
 
 	private function RollierenderJahreswert(Integer $VariableID) {
-
 		//Den Datensatz von vor 365,25 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
 		$historischeWerte = AC_GetLoggedValues($this->ReadPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
 		$wertVor365d = 0;
