@@ -13,7 +13,7 @@ class Batterie extends IPSModule {
 		parent::Create();
 
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
-		$this->RegisterPropertyInteger("Archiv",IPS_GetVariableIDByName("Archiv", 0 ));
+		$this->RegisterPropertyInteger("Archiv",IPS_GetInstanceIDByName("Archiv", 0 ));
 		$this->RegisterPropertyInteger("Verbraucher1", 0);
 		$this->RegisterPropertyInteger("Verbraucher2", 0);
 		$this->RegisterPropertyInteger("Verbraucher3", 0);
