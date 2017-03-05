@@ -12,6 +12,7 @@
 	{ "type": "SelectVariable", "name": "Verbraucher4", "caption": "Stromverbraucher 4" },
 	{ "type": "SelectVariable", "name": "Verbraucher5", "caption": "Stromverbraucher 5" },
 	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Kapazität(Wh)" },
-	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" }
+	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" },
+	{ "type": "SelectInstance", "name": "Archiv", "caption": "Archiv" }
   ]
 }

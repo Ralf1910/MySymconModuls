@@ -26,6 +26,8 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("Kapazitaet", 0);
 		$this->RegisterPropertyInteger("MaxLadeleistung", 0);
 
+		$this->RegisterPropertyInteger("Archiv",0);
+
 
 		// Variablen anlegen
 		$this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10);
@@ -65,6 +67,18 @@ class Batterie extends IPSModule {
 		$this->SetTimerInterval("Update", 60*1000);
 	}
 
+
+	public function RollierenderJahreswert(Integer $VariableID) {
+
+		//Den Datensatz von vor 365,25 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
+		$historischeWerte = AC_GetLoggedValues($this->ReadPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
+		$wertVor365d = 0;
+		foreach($historischeWerte as $wertVorEinemJahr) {
+			$wertVor365d = $wertVorEinemJahr['Value'];
+		}
+
+		return (GetValue($VariableID) - $wertVor365d);
+	}
 
 	public function Update2() {
 
